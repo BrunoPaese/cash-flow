@@ -1,26 +1,44 @@
 import Button from "../Button";
 import Input from "../Input";
-import { Page } from "./style";
+import {
+  Body,
+  GridButton,
+  Header,
+  Page,
+  RightContainer,
+  StyledLink,
+} from "./style";
 import logoDark from "../../assets/logo_dark.png";
+import logoLight from "../../assets/logo_light.png";
 import Select from "../Select";
 import type { Options } from "../Select/type";
 import { useState } from "react";
+import Toggle from "../Toggle";
+import { Moon, Sun, LogIn } from "lucide-react";
 
 type ThemeMode = "light" | "dark";
 
 function Login() {
   const getLanguageOptions = (): Options[] => {
     return [
-      { value: "pt", label: "Português" },
-      { value: "en", label: "Inglês" },
-      { value: "es", label: "Espanhol" },
+      { value: "pt", label: "Português", icon: null },
+      { value: "en", label: "Inglês", icon: null },
+      { value: "es", label: "Espanhol", icon: null },
     ];
   };
 
   const getThemeOptions = (): Options[] => {
     return [
-      { value: "light", label: "Claro" },
-      { value: "dark", label: "Escuro" },
+      {
+        value: "light",
+        label: "Claro",
+        icon: <Sun size={18} strokeWidth={1.8} />,
+      },
+      {
+        value: "dark",
+        label: "Escuro",
+        icon: <Moon size={18} strokeWidth={1.8} />,
+      },
     ];
   };
 
@@ -34,26 +52,35 @@ function Login() {
 
   return (
     <Page theme={theme}>
-      <div className="login-card">
+      <Header>
+        <Select theme={theme} options={getLanguageOptions()} />
+        <Toggle
+          value={theme}
+          options={getThemeOptions()}
+          onChange={(value) => setTheme(value as ThemeMode)}
+        />
+      </Header>
+      <Body>
         <img
-          src={logoDark}
+          src={theme === "dark" ? logoDark : logoLight}
           width={300}
           height={300}
           alt="Logo do sistema"
-          className="login-logo"
         />
-        <Input label="E-mail" type="email" theme={theme} />
-        <Input label="Senha" type="password" theme={theme} />
-        <Button theme={theme}>teste</Button>
-        <Select label="Idioma" theme={theme} options={getLanguageOptions()} />
-        <Select
-          label="Tema"
-          theme={theme}
-          options={getThemeOptions()}
-          onChange={(value) => setTheme(value as ThemeMode)}
-          value={theme}
-        />
-      </div>
+        <Input label="Email" type="email" theme={theme} />
+        <Input label="Password" type="password" theme={theme} />
+        <RightContainer theme={theme}>
+          <StyledLink href="/reset-password" theme={theme}>
+            Forgot Password?
+          </StyledLink>
+        </RightContainer>
+        <GridButton>
+          <Button icon={LogIn}>Login</Button>
+        </GridButton>
+        <StyledLink href="/create-account" theme={theme}>
+          Create Account
+        </StyledLink>
+      </Body>
     </Page>
   );
 }

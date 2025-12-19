@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { colors } from "../Style/theme";
 
 interface InputStyleProps {
   theme: "light" | "dark";
@@ -12,7 +13,7 @@ export const Container = styled.div`
 
   label {
     font-size: 13px;
-    color: rgba(255, 255, 255, 0.75);
+    color: ${colors.darkText};
   }
 `;
 
@@ -27,24 +28,24 @@ export const StyledInput = styled.input<InputStyleProps>`
   font-family: system-ui, -apple-system, BlinkMacSystemFont;
 
   background: ${({ theme }) =>
-    theme === "dark" ? "rgba(28,28,30,0.65)" : "rgba(255,255,255,0.6)"};
+    theme === "dark" ? colors.darkComponentBg : colors.lightComponentBg};
 
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
 
   border: 1px solid
     ${({ theme }) =>
-      theme === "dark" ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.08)"};
+      theme === "dark" ? colors.darkBorder : colors.lightBorder};
 
   color: ${({ theme }) =>
-    theme === "dark" ? "rgba(255,255,255,0.9)" : "rgba(0,0,0,0.85)"};
+    theme === "dark" ? colors.darkText : colors.lightText};
 
   outline: none;
   transition: all 0.25s ease;
 
   &::placeholder {
     color: ${({ theme }) =>
-      theme === "dark" ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.45)"};
+      theme === "dark" ? colors.darkText : colors.lightText};
   }
 
   &:focus {

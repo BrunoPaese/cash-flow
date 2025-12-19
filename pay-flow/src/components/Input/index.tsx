@@ -9,8 +9,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 function Input({ label, theme = "light", ...props }: InputProps) {
   return (
     <Container>
-      <label>{label}</label>
-      <StyledInput theme={theme} {...props} />
+      <StyledInput theme={theme} placeholder={label} {...props} />
     </Container>
   );
 }

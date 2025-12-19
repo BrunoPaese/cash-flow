@@ -3,14 +3,12 @@ import type { Options } from "./type";
 
 interface SelectProps<T>
   extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, "onChange"> {
-  label: string;
   options: Options<T>[];
   theme?: "light" | "dark";
   onChange?: (value: T) => void;
 }
 
 function Select<T>({
-  label,
   theme = "light",
   options,
   onChange,
@@ -27,7 +25,6 @@ function Select<T>({
 
   return (
     <Container>
-      <label>{label}</label>
       <StyledSelect theme={theme} onChange={handleChange} {...props}>
         {options.map((option) => (
           <option key={String(option.value)} value={String(option.value)}>
@@ -35,7 +32,7 @@ function Select<T>({
           </option>
         ))}
       </StyledSelect>
-      <Arrow />
+      <Arrow theme={theme} />
     </Container>
   );
 }
