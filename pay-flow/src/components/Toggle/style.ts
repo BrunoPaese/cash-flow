@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { colors } from "../Style/theme";
 
 interface ToggleStyleProps {
   theme: "light" | "dark";
@@ -6,12 +7,7 @@ interface ToggleStyleProps {
   index?: number;
 }
 
-const darkText = "rgba(255, 255, 255, 0.9)";
-const lightText = "rgba(0, 0, 0, 0.88)";
-
 export const Container = styled.div<ToggleStyleProps>`
-  box-sizing: border-box; /* 🔥 ESSENCIAL */
-
   position: relative;
   display: flex;
   width: 160px;
@@ -20,14 +16,14 @@ export const Container = styled.div<ToggleStyleProps>`
   border-radius: 999px;
 
   background: ${({ theme }) =>
-    theme === "dark" ? "rgba(28,28,30,0.65)" : "rgba(255,255,255,0.6)"};
+    theme === "dark" ? colors.darkComponentBg : colors.lightComponentBg};
 
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
 
   border: 1px solid
     ${({ theme }) =>
-      theme === "dark" ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.08)"};
+      theme === "dark" ? colors.darkBorder : colors.lightBorder};
 `;
 
 export const ToggleButton = styled.button<ToggleStyleProps>`
@@ -43,7 +39,8 @@ export const ToggleButton = styled.button<ToggleStyleProps>`
   cursor: pointer;
   z-index: 2;
 
-  color: ${({ theme }) => (theme === "dark" ? darkText : lightText)};
+  color: ${({ theme }) =>
+    theme === "dark" ? colors.darkText : colors.lightText};
 
   opacity: ${({ active }) => (active ? 1 : 0.45)};
   transition: opacity 0.2s ease;

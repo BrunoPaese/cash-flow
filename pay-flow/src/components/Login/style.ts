@@ -1,14 +1,9 @@
 import styled from "styled-components";
+import { colors } from "../Style/theme";
 
 interface PageProps {
   theme: "light" | "dark";
 }
-
-const darkBackground = "linear-gradient(135deg, #0a0a0a, #1c1c1e)";
-const lightBackground = "linear-gradient(135deg, #f2f2f7, #e5e5ea)";
-
-const darkText = "rgba(255, 255, 255, 0.9)";
-const lightText = "rgba(0, 0, 0, 0.88)";
 
 export const Page = styled.div<PageProps>`
   min-height: 100vh;
@@ -18,14 +13,15 @@ export const Page = styled.div<PageProps>`
   flex-direction: column;
 
   background: ${({ theme }) =>
-    theme === "dark" ? darkBackground : lightBackground};
+    theme === "dark" ? colors.darkBackground : colors.lightBackground};
 
   font-family: system-ui, -apple-system, BlinkMacSystemFont;
 `;
 
 export const StyledLink = styled.a<PageProps>`
   text-decoration: none;
-  color: ${({ theme }) => (theme === "dark" ? darkText : lightText)};
+  color: ${({ theme }) =>
+    theme === "dark" ? colors.darkText : colors.lightText};
 
   &:hover {
     text-decoration: underline;

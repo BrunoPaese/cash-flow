@@ -1,7 +1,5 @@
 import styled from "styled-components";
-
-const darkText = "rgba(255, 255, 255, 0.9)";
-const lightText = "rgba(0, 0, 0, 0.88)";
+import { colors } from "../Style/theme";
 
 interface SelectStyleProps {
   theme: "light" | "dark";
@@ -15,7 +13,7 @@ export const Container = styled.div`
     font-size: 13px;
     margin-bottom: 6px;
     display: block;
-    color: ${darkText};
+    color: ${colors.darkText};
   }
 `;
 
@@ -34,16 +32,17 @@ export const StyledSelect = styled.select<SelectStyleProps>`
   -moz-appearance: none;
 
   background: ${({ theme }) =>
-    theme === "dark" ? "rgba(28,28,30,0.65)" : "rgba(255,255,255,0.6)"};
+    theme === "dark" ? colors.darkComponentBg : colors.lightComponentBg};
 
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
 
   border: 1px solid
     ${({ theme }) =>
-      theme === "dark" ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.08)"};
+      theme === "dark" ? colors.darkBorder : colors.lightBorder};
 
-  color: ${({ theme }) => (theme === "dark" ? darkText : lightText)};
+  color: ${({ theme }) =>
+    theme === "dark" ? colors.darkText : colors.lightText};
 
   outline: none;
   transition: all 0.25s ease;
@@ -59,7 +58,8 @@ export const StyledSelect = styled.select<SelectStyleProps>`
   }
 
   option {
-    color: ${({ theme }) => (theme === "dark" ? darkText : lightText)};
+    color: ${({ theme }) =>
+      theme === "dark" ? colors.darkText : colors.lightText};
   }
 `;
 
@@ -77,5 +77,5 @@ export const Arrow = styled.span<SelectStyleProps>`
   border-right: 6px solid transparent;
 
   border-top: 6px solid
-    ${({ theme }) => (theme === "dark" ? darkText : lightText)};
+    ${({ theme }) => (theme === "dark" ? colors.darkText : colors.lightText)};
 `;

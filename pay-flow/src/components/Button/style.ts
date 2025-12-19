@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { colors } from "../Style/theme";
 
 export const StyledButton = styled.button`
   width: 100%;
@@ -7,8 +8,8 @@ export const StyledButton = styled.button`
   border-radius: 14px;
   border: none;
 
-  background: #5bc6f5;
-  color: #ffffff;
+  background: ${colors.primary};
+  color: ${colors.white};
 
   font-size: 15px;
   font-weight: 500;
