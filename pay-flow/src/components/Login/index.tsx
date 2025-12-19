@@ -1,13 +1,20 @@
 import Button from "../Button";
 import Input from "../Input";
-import { Page, RightContainer, StyledLink } from "./style";
+import {
+  Body,
+  GridButton,
+  Header,
+  Page,
+  RightContainer,
+  StyledLink,
+} from "./style";
 import logoDark from "../../assets/logo_dark.png";
 import logoLight from "../../assets/logo_light.png";
 import Select from "../Select";
 import type { Options } from "../Select/type";
 import { useState } from "react";
 import Toggle from "../Toggle";
-import { Moon, Sun } from "lucide-react";
+import { Moon, Sun, LogIn } from "lucide-react";
 
 type ThemeMode = "light" | "dark";
 
@@ -45,13 +52,20 @@ function Login() {
 
   return (
     <Page theme={theme}>
-      <div className="login-card">
+      <Header>
+        <Select theme={theme} options={getLanguageOptions()} />
+        <Toggle
+          value={theme}
+          options={getThemeOptions()}
+          onChange={(value) => setTheme(value as ThemeMode)}
+        />
+      </Header>
+      <Body>
         <img
           src={theme === "dark" ? logoDark : logoLight}
           width={300}
           height={300}
           alt="Logo do sistema"
-          className="login-logo"
         />
         <Input label="Email" type="email" theme={theme} />
         <Input label="Password" type="password" theme={theme} />
@@ -60,19 +74,13 @@ function Login() {
             Forgot Password?
           </StyledLink>
         </RightContainer>
-        <Button theme={theme}>Login</Button>
-        <RightContainer theme={theme}>
-          <StyledLink href="/create-account" theme={theme}>
-            Create Account
-          </StyledLink>
-        </RightContainer>
-        <Select theme={theme} options={getLanguageOptions()} />
-        <Toggle
-          value={theme}
-          options={getThemeOptions()}
-          onChange={(value) => setTheme(value as ThemeMode)}
-        ></Toggle>
-      </div>
+        <GridButton>
+          <Button icon={LogIn}>Login</Button>
+        </GridButton>
+        <StyledLink href="/create-account" theme={theme}>
+          Create Account
+        </StyledLink>
+      </Body>
     </Page>
   );
 }

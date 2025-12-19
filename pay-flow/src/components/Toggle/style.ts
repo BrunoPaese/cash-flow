@@ -14,7 +14,7 @@ export const Container = styled.div<ToggleStyleProps>`
 
   position: relative;
   display: flex;
-  width: 96px;
+  width: 160px;
   height: 50px;
 
   border-radius: 999px;

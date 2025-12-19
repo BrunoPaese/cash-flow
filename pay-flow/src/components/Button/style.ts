@@ -1,54 +1,43 @@
 import styled from "styled-components";
 
-const darkText = "rgba(255, 255, 255, 0.9)";
-const lightText = "rgba(0, 0, 0, 0.88)";
-
-interface ButtonStyleProps {
-  theme: "light" | "dark";
-}
-
-export const StyledButton = styled.button<ButtonStyleProps>`
+export const StyledButton = styled.button`
   width: 100%;
   height: 48px;
 
-  border-radius: 16px;
-  border: 1px solid
-    ${({ theme }) =>
-      theme === "dark" ? "rgba(255,255,255,0.18)" : "rgba(0,0,0,0.1)"};
+  border-radius: 14px;
+  border: none;
 
-  background: ${({ theme }) =>
-    theme === "dark" ? "rgba(28,28,30,0.7)" : "rgba(255,255,255,0.65)"};
-
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  background: #5bc6f5;
+  color: #ffffff;
 
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 500;
   font-family: system-ui, -apple-system, BlinkMacSystemFont;
-
-  color: ${({ theme }) => (theme === "dark" ? darkText : lightText)};
-
-  cursor: pointer;
-  outline: none;
 
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
 
+  cursor: pointer;
   transition: all 0.25s ease;
 
   &:hover {
-    background: ${({ theme }) =>
-      theme === "dark" ? "rgba(40,40,42,0.8)" : "rgba(255,255,255,0.8)"};
+    filter: brightness(0.96);
   }
 
   &:active {
-    transform: scale(0.97);
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25);
+    transform: scale(0.98);
+    filter: brightness(0.92);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(91, 198, 245, 0.35);
   }
 
   &:disabled {
-    opacity: 0.5;
+    opacity: 0.6;
     cursor: not-allowed;
   }
 `;
