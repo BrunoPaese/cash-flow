@@ -5,6 +5,10 @@
     "createAccount": "Criar Conta",
     "email": "E-mail",
     "password": "Senha",
-    "logo": "Logo"
+    "logo": "Logo",
+    "selectTheme": "Selecione o Tema",
+    "signIn": "Fazer Login",
+    "enterEmail": "Informe seu Email",
+    "enterPassword": "Informe sua Senha"
   }
 }

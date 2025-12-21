@@ -3,13 +3,19 @@ import type { InputHTMLAttributes } from "react";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   placeholder: string;
+  text: string;
   theme?: "light" | "dark";
 }
 
-function Input({ placeholder, theme = "light", ...props }: InputProps) {
+function Input({ placeholder, text, theme = "light", ...props }: InputProps) {
   return (
     <Container>
-      <StyledInput theme={theme} placeholder={placeholder} {...props} />
+      <StyledInput
+        theme={theme}
+        placeholder={placeholder}
+        title={text}
+        {...props}
+      />
     </Container>
   );
 }

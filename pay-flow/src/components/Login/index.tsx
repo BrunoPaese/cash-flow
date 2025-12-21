@@ -63,6 +63,7 @@ function Login() {
           theme={theme}
           options={getLanguageOptions()}
           value={currentLanguage}
+          text={t("login.selectTheme")}
           onChange={(value) => {
             i18n.changeLanguage(value);
           }}
@@ -70,6 +71,7 @@ function Login() {
         <Toggle
           value={theme}
           options={getThemeOptions()}
+          text={t("login.selectTheme")}
           onChange={(value) => setTheme(value as ThemeMode)}
         />
       </Header>
@@ -80,11 +82,17 @@ function Login() {
           height={300}
           alt={t("login.logo")}
         />
-        <Input placeholder={t("login.email")} type="email" theme={theme} />
+        <Input
+          placeholder={t("login.email")}
+          type="email"
+          theme={theme}
+          text={t("login.enterEmail")}
+        />
         <Input
           placeholder={t("login.password")}
           type="password"
           theme={theme}
+          text={t("login.enterPassword")}
         />
         <RightContainer theme={theme}>
           <StyledLink href="/reset-password" theme={theme}>
@@ -92,7 +100,7 @@ function Login() {
           </StyledLink>
         </RightContainer>
         <GridButton>
-          <Button icon={LogIn}>{t("login.login")}</Button>
+          <Button icon={LogIn} text={t('login.signIn')}>{t("login.login")}</Button>
         </GridButton>
         <StyledLink href="/create-account" theme={theme}>
           {t("login.createAccount")}

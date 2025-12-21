@@ -2,9 +2,13 @@
   "login": {
     "forgotPassword": "Forgot your password?",
     "login": "Sign in",
-    "createAccount": "Create account",
+    "createAccount": "Create Account",
     "email": "Email",
     "password": "Password",
-    "logo": "Logo"
+    "logo": "Logo",
+    "selectTheme": "Select Theme",
+    "signIn": "Sign in",
+    "enterEmail": "Enter your email",
+    "enterPassword": "Enter your password"
   }
 }
