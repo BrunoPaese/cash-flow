@@ -1,0 +1,10 @@
+{
+  "login": {
+    "forgotPassword": "Esqueceu a Senha?",
+    "login": "Entrar",
+    "createAccount": "Criar Conta",
+    "email": "E-mail",
+    "password": "Senha",
+    "logo": "Logo"
+  }
+}

@@ -15,15 +15,21 @@ import type { Options } from "../Select/type";
 import { useState } from "react";
 import Toggle from "../Toggle";
 import { Moon, Sun, LogIn } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import i18n from "i18next";
 
 type ThemeMode = "light" | "dark";
 
 function Login() {
+  const { t } = useTranslation();
+
+  const currentLanguage = i18n.language.split("-")[0];
+
   const getLanguageOptions = (): Options[] => {
     return [
       { value: "pt", label: "Português", icon: null },
-      { value: "en", label: "Inglês", icon: null },
-      { value: "es", label: "Espanhol", icon: null },
+      { value: "en", label: "English", icon: null },
+      { value: "es", label: "Español", icon: null },
     ];
   };
 
@@ -53,7 +59,14 @@ function Login() {
   return (
     <Page theme={theme}>
       <Header>
-        <Select theme={theme} options={getLanguageOptions()} />
+        <Select
+          theme={theme}
+          options={getLanguageOptions()}
+          value={currentLanguage}
+          onChange={(value) => {
+            i18n.changeLanguage(value);
+          }}
+        />
         <Toggle
           value={theme}
           options={getThemeOptions()}
@@ -65,20 +78,24 @@ function Login() {
           src={theme === "dark" ? logoDark : logoLight}
           width={300}
           height={300}
-          alt="Logo do sistema"
+          alt={t("login.logo")}
         />
-        <Input label="Email" type="email" theme={theme} />
-        <Input label="Password" type="password" theme={theme} />
+        <Input placeholder={t("login.email")} type="email" theme={theme} />
+        <Input
+          placeholder={t("login.password")}
+          type="password"
+          theme={theme}
+        />
         <RightContainer theme={theme}>
           <StyledLink href="/reset-password" theme={theme}>
-            Forgot Password?
+            {t("login.forgotPassword")}
           </StyledLink>
         </RightContainer>
         <GridButton>
-          <Button icon={LogIn}>Login</Button>
+          <Button icon={LogIn}>{t("login.login")}</Button>
         </GridButton>
         <StyledLink href="/create-account" theme={theme}>
-          Create Account
+          {t("login.createAccount")}
         </StyledLink>
       </Body>
     </Page>
