@@ -23,6 +23,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import { loginSchema } from "../../validations/loginSchema";
 import { APP_VERSION } from "../../config/app";
+// import { useNavigate } from "react-router-dom";
 
 type ThemeMode = "light" | "dark";
 
@@ -33,6 +34,7 @@ interface LoginFormData {
 
 function Login() {
   const { t } = useTranslation();
+  // const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -78,6 +80,7 @@ function Login() {
     toast.error("Erro");
     toast.warning("Atenção");
     console.log(data);
+    // navigate("/dashboard");
   };
 
   const [theme, setTheme] = useState<ThemeMode>(getSystemTheme);
