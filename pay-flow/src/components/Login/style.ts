@@ -58,3 +58,13 @@ export const GridButton = styled.div`
   margin: 20px 0 20px 0;
   width: 400px;
 `;
+
+export const Footer = styled.footer<PageProps>`
+  position: absolute;
+  bottom: 12px;
+  right: 16px;
+  font-size: 12px;
+  opacity: 0.6;
+  color: ${({ theme }) =>
+    theme === "dark" ? colors.darkText : colors.lightText};
+`;

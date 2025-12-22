@@ -10,5 +10,13 @@
     "signIn": "Fazer Login",
     "enterEmail": "Informe seu Email",
     "enterPassword": "Informe sua Senha"
+  },
+  "app": { "version": "Versão" },
+  "validation": {
+    "emailInvalid": "E-mail Inválido",
+    "emailRequired": "E-mail é Obrigatório",
+    "passwordMin": "Senha Precisa Ter no Mínimo Doze Caracteres",
+    "passwordNoSpaces": "Senha Não Pode Conter Espaços em Branco",
+    "passwordRequired": "Senha é Obrigatória"
   }
 }

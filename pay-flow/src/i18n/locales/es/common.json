@@ -10,5 +10,6 @@
     "signIn": "Iniciar sesión",
     "enterEmail": "Ingresa tu correo electrónico",
     "enterPassword": "Ingresa tu contraseña"
-  }
+  },
+  "app": { "version": "Versión" }
 }

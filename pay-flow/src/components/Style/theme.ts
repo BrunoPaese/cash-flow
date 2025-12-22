@@ -14,10 +14,14 @@ export const colors = {
   // Borders
   darkBorder: "rgba(255, 255, 255, 0.12)",
   lightBorder: "rgba(0, 0, 0, 0.08)",
+  errorBorder: "#ef4444",
 
   // Button color
   primary: "#5bc6f5",
 
   // White
   white: "#ffffff",
+
+  // Error
+  error: "#ef4444",
 };

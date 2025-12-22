@@ -10,5 +10,6 @@
     "signIn": "Sign in",
     "enterEmail": "Enter your email",
     "enterPassword": "Enter your password"
-  }
+  },
+  "app": { "version": "Version" }
 }

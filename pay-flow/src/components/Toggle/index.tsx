@@ -24,6 +24,7 @@ function Toggle<T>({ value, options, text, onChange }: ToggleProps<T>) {
           key={index}
           active={option.value === value}
           title={text}
+          type="button"
           onClick={() => handleClick(option.value)}
         >
           {option.icon}

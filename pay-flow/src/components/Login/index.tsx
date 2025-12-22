@@ -2,6 +2,7 @@ import Button from "../Button";
 import Input from "../Input";
 import {
   Body,
+  Footer,
   GridButton,
   Header,
   Page,
@@ -21,6 +22,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import { loginSchema } from "../../validations/loginSchema";
+import { APP_VERSION } from "../../config/app";
 
 type ThemeMode = "light" | "dark";
 
@@ -31,7 +33,11 @@ interface LoginFormData {
 
 function Login() {
   const { t } = useTranslation();
-  const { register, handleSubmit } = useForm<LoginFormData>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormData>({
     resolver: yupResolver(loginSchema(t)),
   });
 
@@ -105,9 +111,10 @@ function Login() {
           />
           <Input
             placeholder={t("login.email")}
-            type="email"
             theme={theme}
             text={t("login.enterEmail")}
+            autoFocus
+            error={errors.email?.message}
             {...register("email")}
           />
           <Input
@@ -115,6 +122,7 @@ function Login() {
             type="password"
             theme={theme}
             text={t("login.enterPassword")}
+            error={errors.password?.message}
             {...register("password")}
           />
           <RightContainer theme={theme}>
@@ -130,6 +138,9 @@ function Login() {
           <StyledLink href="/create-account" theme={theme}>
             {t("login.createAccount")}
           </StyledLink>
+          <Footer theme={theme}>
+            {t("app.version")} v{APP_VERSION}
+          </Footer>
         </Body>
       </Page>
     </form>
