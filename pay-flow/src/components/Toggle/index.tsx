@@ -4,10 +4,11 @@ import { Container, Thumb, ToggleButton } from "./style";
 interface ToggleProps<T> {
   value: T;
   options: Options<T>[];
+  text: string;
   onChange?: (value: T) => void;
 }
 
-function Toggle<T>({ value, options, onChange }: ToggleProps<T>) {
+function Toggle<T>({ value, options, text, onChange }: ToggleProps<T>) {
   const activeIndex = options.findIndex((opt) => opt.value === value);
 
   const handleClick = (optionValue: T) => {
@@ -22,6 +23,8 @@ function Toggle<T>({ value, options, onChange }: ToggleProps<T>) {
         <ToggleButton
           key={index}
           active={option.value === value}
+          title={text}
+          type="button"
           onClick={() => handleClick(option.value)}
         >
           {option.icon}

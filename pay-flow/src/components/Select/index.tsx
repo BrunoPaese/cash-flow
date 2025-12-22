@@ -5,12 +5,14 @@ interface SelectProps<T>
   extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, "onChange"> {
   options: Options<T>[];
   theme?: "light" | "dark";
+  text: string;
   onChange?: (value: T) => void;
 }
 
 function Select<T>({
   theme = "light",
   options,
+  text,
   onChange,
   ...props
 }: SelectProps<T>) {
@@ -27,7 +29,11 @@ function Select<T>({
     <Container>
       <StyledSelect theme={theme} onChange={handleChange} {...props}>
         {options.map((option) => (
-          <option key={String(option.value)} value={String(option.value)}>
+          <option
+            key={String(option.value)}
+            value={String(option.value)}
+            title={text}
+          >
             {option.label}
           </option>
         ))}

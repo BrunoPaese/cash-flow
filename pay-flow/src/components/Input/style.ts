@@ -3,6 +3,7 @@ import { colors } from "../Style/theme";
 
 interface InputStyleProps {
   theme: "light" | "dark";
+  hasError: boolean;
 }
 
 export const Container = styled.div`
@@ -10,6 +11,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 6px;
+  position: relative;
 
   label {
     font-size: 13px;
@@ -34,8 +36,12 @@ export const StyledInput = styled.input<InputStyleProps>`
   -webkit-backdrop-filter: blur(16px);
 
   border: 1px solid
-    ${({ theme }) =>
-      theme === "dark" ? colors.darkBorder : colors.lightBorder};
+    ${({ hasError, theme }) =>
+      hasError
+        ? colors.error
+        : theme === "dark"
+        ? colors.darkBorder
+        : colors.lightBorder};
 
   color: ${({ theme }) =>
     theme === "dark" ? colors.darkText : colors.lightText};
@@ -49,8 +55,12 @@ export const StyledInput = styled.input<InputStyleProps>`
   }
 
   &:focus {
-    border-color: ${({ theme }) =>
-      theme === "dark" ? "rgba(255,255,255,0.25)" : "rgba(0,0,0,0.18)"};
+    border-color: ${({ hasError, theme }) =>
+      hasError
+        ? colors.error
+        : theme === "dark"
+        ? colors.darkBorder
+        : colors.lightBorder};
 
     box-shadow: ${({ theme }) =>
       theme === "dark"
@@ -58,3 +68,23 @@ export const StyledInput = styled.input<InputStyleProps>`
         : "0 0 0 4px rgba(0,0,0,0.05)"};
   }
 `;
+
+export const ErrorIcon = styled.span`
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  display: flex;
+  align-items: center;
+
+  color: ${colors.error};
+  cursor: help;
+
+  &:hover span {
+    opacity: 1;
+    transform: translateY(-6px);
+    pointer-events: auto;
+  }
+`;
+

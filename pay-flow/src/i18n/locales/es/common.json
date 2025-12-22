@@ -5,6 +5,11 @@
     "createAccount": "Crear cuenta",
     "email": "Correo electrónico",
     "password": "Contraseña",
-    "logo": "Logo"
-  }
+    "logo": "Logo",
+    "selectTheme": "Seleccionar tema",
+    "signIn": "Iniciar sesión",
+    "enterEmail": "Ingresa tu correo electrónico",
+    "enterPassword": "Ingresa tu contraseña"
+  },
+  "app": { "version": "Versión" }
 }

@@ -2,6 +2,7 @@ import Button from "../Button";
 import Input from "../Input";
 import {
   Body,
+  Footer,
   GridButton,
   Header,
   Page,
@@ -17,11 +18,30 @@ import Toggle from "../Toggle";
 import { Moon, Sun, LogIn } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import i18n from "i18next";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { toast } from "react-toastify";
+import { loginSchema } from "../../validations/loginSchema";
+import { APP_VERSION } from "../../config/app";
+// import { useNavigate } from "react-router-dom";
 
 type ThemeMode = "light" | "dark";
 
+interface LoginFormData {
+  email: string;
+  password: string;
+}
+
 function Login() {
   const { t } = useTranslation();
+  // const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormData>({
+    resolver: yupResolver(loginSchema(t)),
+  });
 
   const currentLanguage = i18n.language.split("-")[0];
 
@@ -54,51 +74,79 @@ function Login() {
       : "light";
   };
 
+  const onSubmit = (data: LoginFormData) => {
+    // chamada login backend
+    toast.success("Sucesso");
+    toast.error("Erro");
+    toast.warning("Atenção");
+    console.log(data);
+    // navigate("/dashboard");
+  };
+
   const [theme, setTheme] = useState<ThemeMode>(getSystemTheme);
 
   return (
-    <Page theme={theme}>
-      <Header>
-        <Select
-          theme={theme}
-          options={getLanguageOptions()}
-          value={currentLanguage}
-          onChange={(value) => {
-            i18n.changeLanguage(value);
-          }}
-        />
-        <Toggle
-          value={theme}
-          options={getThemeOptions()}
-          onChange={(value) => setTheme(value as ThemeMode)}
-        />
-      </Header>
-      <Body>
-        <img
-          src={theme === "dark" ? logoDark : logoLight}
-          width={300}
-          height={300}
-          alt={t("login.logo")}
-        />
-        <Input placeholder={t("login.email")} type="email" theme={theme} />
-        <Input
-          placeholder={t("login.password")}
-          type="password"
-          theme={theme}
-        />
-        <RightContainer theme={theme}>
-          <StyledLink href="/reset-password" theme={theme}>
-            {t("login.forgotPassword")}
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Page theme={theme}>
+        <Header>
+          <Select
+            theme={theme}
+            options={getLanguageOptions()}
+            value={currentLanguage}
+            text={t("login.selectTheme")}
+            onChange={(value) => {
+              i18n.changeLanguage(value);
+            }}
+          />
+          <Toggle
+            value={theme}
+            options={getThemeOptions()}
+            text={t("login.selectTheme")}
+            onChange={(value) => setTheme(value as ThemeMode)}
+          />
+        </Header>
+        <Body>
+          <img
+            src={theme === "dark" ? logoDark : logoLight}
+            width={300}
+            height={300}
+            alt={t("login.logo")}
+          />
+          <Input
+            placeholder={t("login.email")}
+            theme={theme}
+            text={t("login.enterEmail")}
+            autoFocus
+            error={errors.email?.message}
+            {...register("email")}
+          />
+          <Input
+            placeholder={t("login.password")}
+            type="password"
+            theme={theme}
+            text={t("login.enterPassword")}
+            error={errors.password?.message}
+            {...register("password")}
+          />
+          <RightContainer theme={theme}>
+            <StyledLink href="/reset-password" theme={theme}>
+              {t("login.forgotPassword")}
+            </StyledLink>
+          </RightContainer>
+          <GridButton>
+            <Button icon={LogIn} text={t("login.signIn")} type="submit">
+              {t("login.login")}
+            </Button>
+          </GridButton>
+          <StyledLink href="/create-account" theme={theme}>
+            {t("login.createAccount")}
           </StyledLink>
-        </RightContainer>
-        <GridButton>
-          <Button icon={LogIn}>{t("login.login")}</Button>
-        </GridButton>
-        <StyledLink href="/create-account" theme={theme}>
-          {t("login.createAccount")}
-        </StyledLink>
-      </Body>
-    </Page>
+          <Footer theme={theme}>
+            {t("app.version")} v{APP_VERSION}
+          </Footer>
+        </Body>
+      </Page>
+    </form>
   );
 }
 
