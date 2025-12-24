@@ -18,5 +18,6 @@
     "passwordMin": "Senha Precisa Ter no Mínimo Doze Caracteres",
     "passwordNoSpaces": "Senha Não Pode Conter Espaços em Branco",
     "passwordRequired": "Senha é Obrigatória"
-  }
+  },
+  "resetPassword": { "sendCode": "Enviar Código" }
 }

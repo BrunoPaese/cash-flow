@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "../Style/theme";
+import { colors } from "../../components/Style/theme";
 
 interface PageProps {
   theme: "light" | "dark";

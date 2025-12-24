@@ -1,21 +1,11 @@
-import Button from "../Button";
-import Input from "../Input";
-import {
-  Body,
-  Footer,
-  GridButton,
-  Header,
-  Page,
-  RightContainer,
-  StyledLink,
-} from "./style";
+import Input from "../../components/Input";
 import logoDark from "../../assets/logo_dark.png";
 import logoLight from "../../assets/logo_light.png";
-import Select from "../Select";
-import type { Options } from "../Select/type";
+import Select from "../../components/Select";
+import type { Options } from "../../components/Select/type";
 import { useState } from "react";
-import Toggle from "../Toggle";
-import { Moon, Sun, LogIn } from "lucide-react";
+import Toggle from "../../components/Toggle";
+import { Moon, Sun, Send } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import i18n from "i18next";
 import { useForm } from "react-hook-form";
@@ -23,6 +13,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import { loginSchema } from "../../validations/loginSchema";
 import { APP_VERSION } from "../../config/app";
+import { Body, Footer, Header, Page } from "../Login/style";
+import Button from "../../components/Button";
+
 // import { useNavigate } from "react-router-dom";
 
 type ThemeMode = "light" | "dark";
@@ -32,7 +25,7 @@ interface LoginFormData {
   password: string;
 }
 
-function Login() {
+function ResetPassword() {
   const { t } = useTranslation();
   // const navigate = useNavigate();
   const {
@@ -120,27 +113,9 @@ function Login() {
             error={errors.email?.message}
             {...register("email")}
           />
-          <Input
-            placeholder={t("login.password")}
-            type="password"
-            theme={theme}
-            text={t("login.enterPassword")}
-            error={errors.password?.message}
-            {...register("password")}
-          />
-          <RightContainer theme={theme}>
-            <StyledLink href="/reset-password" theme={theme}>
-              {t("login.forgotPassword")}
-            </StyledLink>
-          </RightContainer>
-          <GridButton>
-            <Button icon={LogIn} text={t("login.signIn")} type="submit">
-              {t("login.login")}
-            </Button>
-          </GridButton>
-          <StyledLink href="/create-account" theme={theme}>
-            {t("login.createAccount")}
-          </StyledLink>
+          <Button icon={Send} text={"aaa"}>
+            {t("resetPassword.sendCode")}
+          </Button>
           <Footer theme={theme}>
             {t("app.version")} v{APP_VERSION}
           </Footer>
@@ -150,4 +125,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default ResetPassword;
