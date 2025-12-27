@@ -10,7 +10,7 @@ export const CodeContainer = styled.div`
   display: flex;
   gap: 10px;
   justify-content: center;
-  margin: 20px 0;
+  margin-bottom: 20px;
 `;
 
 export const CodeInput = styled.input<CodeInputProps>`
@@ -24,9 +24,7 @@ export const CodeInput = styled.input<CodeInputProps>`
   border-radius: 14px;
 
   background: ${({ theme }) =>
-    theme === "dark"
-      ? colors.darkComponentBg
-      : colors.lightComponentBg};
+    theme === "dark" ? colors.darkComponentBg : colors.lightComponentBg};
 
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -39,15 +37,13 @@ export const CodeInput = styled.input<CodeInputProps>`
         ? colors.darkBorder
         : colors.lightBorder};
 
-  color: ${({ theme }) =>
-    theme === "dark" ? "#FFFFFF" : "#000000"};
+  color: ${({ theme }) => (theme === "dark" ? "#FFFFFF" : "#000000")};
 
   outline: none;
   transition: all 0.25s ease;
 
   &::placeholder {
-    color: ${({ theme }) =>
-      theme === "dark" ? "#FFFFFF" : "#000000"};
+    color: ${({ theme }) => (theme === "dark" ? "#FFFFFF" : "#000000")};
     opacity: 0.4;
   }
 

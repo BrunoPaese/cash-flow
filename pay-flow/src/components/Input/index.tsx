@@ -5,7 +5,7 @@ import { Tooltip } from "react-tooltip";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   placeholder: string;
-  text: string;
+  text?: string;
   theme?: "light" | "dark";
   error?: string;
 }

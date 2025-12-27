@@ -4,6 +4,7 @@ import { CodeContainer, CodeInput } from "./style";
 interface VerificationCodeProps extends InputHTMLAttributes<HTMLInputElement> {
   theme?: "light" | "dark";
   error?: string;
+  onComplete?: (code: string) => void;
 }
 
 export function VerificationCode({
@@ -23,6 +24,12 @@ export function VerificationCode({
 
     if (value && index < 5) {
       inputsRef.current[index + 1]?.focus();
+    }
+
+    const fullCode = newCode.join("");
+
+    if (fullCode.length === 6 && !newCode.includes("")) {
+      props.onComplete?.(fullCode);
     }
   };
 

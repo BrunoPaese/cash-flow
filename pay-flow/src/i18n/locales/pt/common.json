@@ -21,6 +21,12 @@
   },
   "resetPassword": {
     "sendCode": "Enviar Código",
-    "sendCodeEmail": "Enviar Código de Redefinição de Senha por E-mail"
+    "sentEmail": "E-mail Enviado",
+    "sendCodeEmail": "Enviar Código de Redefinição de Senha por E-mail",
+    "changePassword": "Alterar Senha",
+    "confirmPassword": "Confirmação da Senha"
+  },
+  "common": {
+    "back": "Voltar"
   }
 }
