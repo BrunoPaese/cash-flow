@@ -16,6 +16,7 @@ import { VerificationCode } from "../../components/VerificationCode";
 type CreateAccountStep = "email" | "create";
 
 interface LoginFormData {
+  name: string;
   email: string;
   password: string;
   confirmPassword: string;
@@ -71,6 +72,12 @@ function CreateAccount() {
         </Title>
         {step === "email" && (
           <>
+            <Input
+              placeholder={t("login.name")}
+              error={errors.name?.message}
+              text={t("login.name")}
+              {...register("name")}
+            />
             <Input
               placeholder={t("login.email")}
               error={errors.email?.message}

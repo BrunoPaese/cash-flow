@@ -9,25 +9,28 @@ import { CurrencyProvider } from "./Currency/CurrencyProvider";
 import { ThemeProvider } from "./Theme/ThemeProvider";
 import { CashierProvider } from "./Cashier/CashierProvider";
 import { CustomerProvider } from "./Customer/CustomerProvider";
+import { AuthProvider } from "./Auth/AuthProvider";
 
 export function Providers({ children }: { children: ReactNode }) {
   return (
     <ThemeProvider>
-      <CurrencyProvider>
-        <CheckoutProvider>
-          <DiscountProvider>
-            <ProductListProvider>
-              <CashierProvider>
-                <CustomerProvider>
-                  <PaymentProvider>
-                    <ShippingProvider>{children}</ShippingProvider>
-                  </PaymentProvider>
-                </CustomerProvider>
-              </CashierProvider>
-            </ProductListProvider>
-          </DiscountProvider>
-        </CheckoutProvider>
-      </CurrencyProvider>
+      <AuthProvider>
+        <CurrencyProvider>
+          <CheckoutProvider>
+            <DiscountProvider>
+              <ProductListProvider>
+                <CashierProvider>
+                  <CustomerProvider>
+                    <PaymentProvider>
+                      <ShippingProvider>{children}</ShippingProvider>
+                    </PaymentProvider>
+                  </CustomerProvider>
+                </CashierProvider>
+              </ProductListProvider>
+            </DiscountProvider>
+          </CheckoutProvider>
+        </CurrencyProvider>
+      </AuthProvider>
     </ThemeProvider>
   );
 }

@@ -3,6 +3,8 @@ import * as yup from "yup";
 
 export const createAccountSchema = (t: TFunction) =>
   yup.object({
+    name: yup.string().trim().uppercase().required(t("login.emailRequired")),
+
     email: yup
       .string()
       .trim()

@@ -52,6 +52,7 @@
     "codeRequired": "Código é obrigatório",
     "confirmPassword": "Confirme sua senha",
     "createAccount": "Criar conta",
+    "name": "Nome",
     "email": "E-mail",
     "emailInvalid": "E-mail inválido",
     "emailRequired": "E-mail é obrigatório",
