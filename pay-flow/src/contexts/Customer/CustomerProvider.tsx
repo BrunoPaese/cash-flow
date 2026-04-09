@@ -10,7 +10,6 @@ export interface Customer {
   phone?: string;
   email?: string;
   country?: string;
-  lastPurchase?: Date;
   adress?: string;
 }
 
@@ -32,7 +31,6 @@ export function CustomerProvider({ children }: { children: ReactNode }) {
         phone: "54999999999",
         email: "bruno@gmail.com",
         country: "BR",
-        lastPurchase: new Date("2024-11-22"),
         adress: "Faria Lima, 999, Pinheiros, São Paulo",
       };
       return customer;
