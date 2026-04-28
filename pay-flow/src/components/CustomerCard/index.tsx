@@ -12,9 +12,10 @@ import { useCheckout } from "../../contexts/Checkout/useCheckout";
 interface CustomerCardProps {
   previewCustomer?: Customer;
   title?: string;
+  onAdd?: () => void;
 }
 
-function CustomerCard({ previewCustomer, title }: CustomerCardProps) {
+function CustomerCard({ previewCustomer, title, onAdd }: CustomerCardProps) {
   const { t } = useTranslation();
   const { theme } = useTheme();
   const { checkout } = useCheckout();
@@ -23,7 +24,11 @@ function CustomerCard({ previewCustomer, title }: CustomerCardProps) {
   const activeCustumer = previewCustomer ?? checkout?.customer;
 
   return (
-    <Card title={title} onClick={() => navigate("/checkout/customer")}>
+    <Card
+      title={title}
+      onClick={() => navigate("/checkout/customer")}
+      onAdd={onAdd}
+    >
       <RowItem theme={theme}>
         <User size={16} />
         <Label>{t("customer.name")}</Label>

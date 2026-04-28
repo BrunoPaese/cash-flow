@@ -13,10 +13,10 @@ import InputButton from "../../components/InputButton";
 import { useCashier } from "../../contexts/Cashier/useCashier";
 import { cashierSchema } from "../../validations/cashierSchema";
 import { useState } from "react";
-import type { Cashier } from "../../contexts/Cashier/CashierProvider";
 import CashierCard from "../../components/CashierCard";
 import { useCheckout } from "../../contexts/Checkout/useCheckout";
 import { ActionFooter } from "../../components/ActionFooter";
+import type { Cashier } from "../../contexts/Cashier/CashierContext";
 
 interface CashierFormData {
   id: number;
@@ -53,7 +53,7 @@ function Cashier() {
     confirmCashier({
       id: data.id,
       name: previewCashier?.name,
-      ratings: previewCashier?.ratings,
+      rating: previewCashier?.rating,
     });
     navigate("/checkout");
   };

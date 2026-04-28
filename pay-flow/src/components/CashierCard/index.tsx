@@ -13,9 +13,10 @@ import { useCheckout } from "../../contexts/Checkout/useCheckout";
 interface CashierCardProps {
   previewCashier?: Cashier;
   title?: string;
+  onAdd?: () => void;
 }
 
-function CashierCard({ previewCashier, title }: CashierCardProps) {
+function CashierCard({ previewCashier, title, onAdd }: CashierCardProps) {
   const { t } = useTranslation();
   const { theme } = useTheme();
   const { checkout } = useCheckout();
@@ -24,7 +25,11 @@ function CashierCard({ previewCashier, title }: CashierCardProps) {
   const activeCashier = previewCashier ?? checkout?.cashier;
 
   return (
-    <Card title={title} onClick={() => navigate("/checkout/cashier")}>
+    <Card
+      title={title}
+      onClick={() => navigate("/checkout/cashier")}
+      onAdd={onAdd}
+    >
       <RowItem theme={theme}>
         <Hash size={16} />
         <Label>{t("cashier.id")}</Label>

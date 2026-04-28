@@ -13,9 +13,10 @@ import { useCheckout } from "../../contexts/Checkout/useCheckout";
 interface ShippingCardProps {
   previewShipping?: Shipping;
   title?: string;
+  onAdd?: () => void;
 }
 
-function ShippingCard({ previewShipping, title }: ShippingCardProps) {
+function ShippingCard({ previewShipping, title, onAdd }: ShippingCardProps) {
   const { t } = useTranslation();
   const { theme } = useTheme();
   const { currency, locale } = useCurrency();
@@ -25,7 +26,11 @@ function ShippingCard({ previewShipping, title }: ShippingCardProps) {
   const activeShipping = previewShipping ?? checkout?.shipping;
 
   return (
-    <Card title={title} onClick={() => navigate("/checkout/shipping")}>
+    <Card
+      title={title}
+      onClick={() => navigate("/checkout/shipping")}
+      onAdd={onAdd}
+    >
       <RowItem theme={theme}>
         <Package size={16} />
         <Label>{t("shipping.type")}</Label>

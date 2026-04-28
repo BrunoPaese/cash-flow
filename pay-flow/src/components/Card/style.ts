@@ -30,7 +30,9 @@ export const CardContainer = styled.div<CardStyleProps>`
   display: flex;
   flex-direction: column;
 
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 
   ${({ clickable, theme }) =>
     clickable &&
@@ -58,7 +60,10 @@ export const CardTitle = styled.h3<CardStyleProps>`
 
   font-size: 16px;
   font-weight: 600;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont;
 
   color: ${({ theme }) =>
     theme === "dark" ? colors.darkText : colors.lightText};
@@ -70,4 +75,35 @@ export const CardContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
+`;
+
+export const AddButton = styled.button<CardStyleProps>`
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: ${({ theme }) =>
+    theme === "dark" ? colors.darkBorder : colors.lightBorder};
+
+  color: ${({ theme }) =>
+    theme === "dark" ? colors.darkText : colors.lightText};
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+  &:hover {
+    transform: scale(1.1);
+    opacity: 0.9;
+  }
+  &:active {
+    transform: scale(0.95);
+  }
 `;

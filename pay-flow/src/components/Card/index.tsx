@@ -1,15 +1,17 @@
 import type { ReactNode, MouseEvent } from "react";
-import { CardContainer, CardTitle, CardContent } from "./style";
+import { CardContainer, CardTitle, CardContent, AddButton } from "./style";
 import { useTheme } from "../../contexts/Theme/useTheme";
+import { Plus } from "lucide-react";
 
 interface CardProps {
   title?: string;
   titlePadding?: number;
   onClick?: () => void;
+  onAdd?: () => void;
   children: ReactNode;
 }
 
-function Card({ title, titlePadding, children, onClick }: CardProps) {
+function Card({ title, titlePadding, children, onClick, onAdd }: CardProps) {
   const { theme } = useTheme();
 
   const handleClick = (event: MouseEvent<HTMLDivElement>) => {
@@ -34,6 +36,11 @@ function Card({ title, titlePadding, children, onClick }: CardProps) {
         <CardTitle theme={theme} titlePadding={titlePadding}>
           {title}
         </CardTitle>
+      )}
+      {onAdd && (
+        <AddButton type="button" onClick={onAdd} theme={theme}>
+          <Plus size={16} />
+        </AddButton>
       )}
       <CardContent>{children}</CardContent>
     </CardContainer>
