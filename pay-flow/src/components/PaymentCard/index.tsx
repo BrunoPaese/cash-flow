@@ -20,9 +20,10 @@ import { useCheckout } from "../../contexts/Checkout/useCheckout";
 
 interface PaymentCardProps {
   title?: string;
+  onAdd: () => void;
 }
 
-function PaymentCard({ title }: PaymentCardProps) {
+function PaymentCard({ title, onAdd }: PaymentCardProps) {
   const { t } = useTranslation();
   const { theme } = useTheme();
   const { currency, locale } = useCurrency();
@@ -30,7 +31,11 @@ function PaymentCard({ title }: PaymentCardProps) {
   const navigate = useNavigate();
 
   return (
-    <Card title={title} onClick={() => navigate("/checkout/payment")}>
+    <Card
+      title={title}
+      onClick={() => navigate("/checkout/payment")}
+      onAdd={onAdd}
+    >
       <RowItem theme={theme}>
         <CreditCard size={16} />
         <Label>{t("payment.paymentMethod")}</Label>

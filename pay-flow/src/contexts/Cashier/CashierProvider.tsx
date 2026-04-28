@@ -1,4 +1,3 @@
-// CashierProvider.tsx
 import { useState, type ReactNode } from "react";
 import { CashierContext, type Cashier } from "./CashierContext";
 import { toast } from "react-toastify";

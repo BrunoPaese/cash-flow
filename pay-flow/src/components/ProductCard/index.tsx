@@ -24,7 +24,11 @@ export interface ProductFormData {
   actions?: string;
 }
 
-function ProductCard() {
+export interface ProductCardProps {
+  onAdd: () => void;
+}
+
+function ProductCard({ onAdd }: ProductCardProps) {
   const { t } = useTranslation();
   const { addProduct } = useProductList();
   const navigate = useNavigate();
@@ -90,6 +94,7 @@ function ProductCard() {
     <Card
       title={t("product.product")}
       onClick={() => navigate("/checkout/product")}
+      onAdd={onAdd}
     >
       <form onSubmit={handleSubmit(handleAddProduct)}>
         <Row align="center">

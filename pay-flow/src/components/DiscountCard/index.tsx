@@ -14,9 +14,10 @@ import { useDiscount } from "../../contexts/Discount/useDiscount";
 interface DiscountCardProps {
   previewDiscount?: Discount;
   title?: string;
+  onAdd?: () => void;
 }
 
-function DiscountCard({ previewDiscount, title }: DiscountCardProps) {
+function DiscountCard({ previewDiscount, title, onAdd }: DiscountCardProps) {
   const { t } = useTranslation();
   const { currency, locale } = useCurrency();
   const { theme } = useTheme();
@@ -34,7 +35,11 @@ function DiscountCard({ previewDiscount, title }: DiscountCardProps) {
       : checkout?.payment?.netTotal;
 
   return (
-    <Card title={title} onClick={() => navigate("/checkout/discount")}>
+    <Card
+      title={title}
+      onClick={() => navigate("/checkout/discount")}
+      onAdd={onAdd}
+    >
       <RowItem theme={theme}>
         <Tag size={16} />
         <Label>{t("discount.coupon")}</Label>
