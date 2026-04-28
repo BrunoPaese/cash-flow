@@ -1,30 +1,21 @@
+// CashierProvider.tsx
 import { useState, type ReactNode } from "react";
-import { CashierContext } from "./CashierContext";
+import { CashierContext, type Cashier } from "./CashierContext";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { useCheckout } from "../Checkout/useCheckout";
-
-export interface Cashier {
-  id?: number;
-  name?: string;
-  ratings?: number[];
-}
+import { getCashierById } from "./cashier.service";
 
 export function CashierProvider({ children }: { children: ReactNode }) {
   const { t } = useTranslation();
   const { setCheckout } = useCheckout();
 
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
 
   const getCashier = async (id: number): Promise<Cashier | undefined> => {
+    setLoading(true);
     try {
-      // carrega o atendente pelo id
-      // mock
-      const cashier = {
-        id,
-        name: "Ana Silva",
-        ratings: [5, 4.7, 4.8, 5],
-      };
+      const cashier = await getCashierById(id);
       return cashier;
     } catch {
       toast.error(t("cashier.errorGetCashier"));
@@ -33,11 +24,12 @@ export function CashierProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const confirmCashier = async (cashier?: Cashier) => {
+  const confirmCashier = (cashier?: Cashier) => {
     setCheckout((prev) => ({
       ...prev,
       cashier,
     }));
+
     toast.success(t("cashier.submitCashier"));
   };
 
