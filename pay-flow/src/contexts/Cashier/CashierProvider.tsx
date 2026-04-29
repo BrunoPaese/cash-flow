@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { useCheckout } from "../Checkout/useCheckout";
 import { getCashierById } from "./cashier.service";
+import type { CashierFormData } from "../../components/CashierFormCard";
 
 export function CashierProvider({ children }: { children: ReactNode }) {
   const { t } = useTranslation();
@@ -23,6 +24,20 @@ export function CashierProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const addCashier = async (
+    cashier: CashierFormData,
+  ): Promise<Cashier | undefined> => {
+    setLoading(true);
+    try {
+      const newCashier = await addCashier(cashier);
+      return newCashier;
+    } catch {
+      toast.error(t("cashier.errorAddCashier"));
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const confirmCashier = (cashier?: Cashier) => {
     setCheckout((prev) => ({
       ...prev,
@@ -37,6 +52,7 @@ export function CashierProvider({ children }: { children: ReactNode }) {
       value={{
         loading,
         getCashier,
+        addCashier,
         confirmCashier,
       }}
     >

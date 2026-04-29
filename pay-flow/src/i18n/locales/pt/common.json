@@ -3,8 +3,13 @@
     "version": "Versão"
   },
   "cashier": {
+    "cpf": "CPF",
+    "email": "E-mail",
+    "createdAt": "Data de criação",
     "cashier": "Atendente",
+    "newCashier": "Novo atendente",
     "confirmCashier": "Confirmar atendente",
+    "addCashier": "Adicionar atendente",
     "errorGetCashier": "Erro ao buscar as informações do atendente",
     "id": "ID",
     "idRequired": "ID é obrigatório",

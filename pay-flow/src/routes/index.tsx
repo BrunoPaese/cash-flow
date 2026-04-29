@@ -9,6 +9,7 @@ import Shipping from "../pages/Shipping";
 import Cashier from "../pages/Cashier";
 import Customer from "../pages/Customer";
 import Discount from "../pages/Discount";
+import NewCashier from "../pages/NewCashier";
 
 function AppRoutes() {
   return (
@@ -20,6 +21,7 @@ function AppRoutes() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/checkout/product" element={<Product />} />
         <Route path="/checkout/cashier" element={<Cashier />} />
+        <Route path="/checkout/cashier/new" element={<NewCashier />} />
         <Route path="/checkout/customer" element={<Customer />} />
         <Route path="/checkout/shipping" element={<Shipping />} />
         <Route path="/checkout/discount" element={<Discount />} />

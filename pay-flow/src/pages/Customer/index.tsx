@@ -18,6 +18,7 @@ import type { Customer } from "../../contexts/Customer/CustomerProvider";
 import CustomerCard from "../../components/CustomerCard";
 import { useCheckout } from "../../contexts/Checkout/useCheckout";
 import { ActionFooter } from "../../components/ActionFooter";
+import { CNPJ_CODE_LENGTH } from "../../domain/constants";
 
 interface CustomerFormData {
   identifier: string;
@@ -101,7 +102,7 @@ function Customer() {
                   placeholder={t("customer.identifier")}
                   error={errors.identifier?.message}
                   value={inputIdentifier}
-                  maxLength={18}
+                  maxLength={CNPJ_CODE_LENGTH}
                   icon={Search}
                   onClick={handleGetCustomer}
                   {...register("identifier", {
