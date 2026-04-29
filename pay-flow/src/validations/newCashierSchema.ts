@@ -6,6 +6,7 @@ export const newCashierSchema = (t: TFunction) =>
     cpf: yup
       .string()
       .required(t("cashier.cashierRequired"))
+      .transform((value) => value.replace(/\D/g, ""))
       .matches(/^\d{11}$/, t("cashier.cpfInvalid")),
     name: yup.string().required(t("cashier.nameRequired")),
     email: yup
@@ -18,5 +19,4 @@ export const newCashierSchema = (t: TFunction) =>
       .required(t("cashier.ratingRequired"))
       .min(0, t("cashier.minRating"))
       .max(5, t("cashier.maxRating")),
-    createdAt: yup.date().required(t("cashier.createdAtRequired")),
   });

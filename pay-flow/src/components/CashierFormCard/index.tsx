@@ -29,7 +29,6 @@ export interface CashierFormData {
   email: string;
   isActive: boolean;
   rating: number;
-  createdAt: Date;
 }
 
 function CashierFormCard() {
@@ -44,9 +43,14 @@ function CashierFormCard() {
     formState: { errors },
   } = useForm<CashierFormData>({
     resolver: yupResolver(newCashierSchema(t)),
+    defaultValues: {
+      isActive: true,
+      rating: 5,
+    },
   });
 
-  const handleAddCashier = (cashier: CashierFormData) => {
+  const handleAddCashier = async (cashier: CashierFormData) => {
+    console.log("Adding cashier:", cashier);
     addCashier(cashier);
     reset();
   };
@@ -94,17 +98,6 @@ function CashierFormCard() {
               placeholder={t("cashier.email")}
               error={errors.email?.message}
               {...register("email")}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Input
-              text={t("cashier.enterCashier")}
-              placeholder={t("cashier.createdAt")}
-              error={errors.createdAt?.message}
-              disabled
-              {...register("createdAt")}
             />
           </Col>
         </Row>

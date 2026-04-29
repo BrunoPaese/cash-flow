@@ -3,7 +3,7 @@ import { CashierContext, type Cashier } from "./CashierContext";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { useCheckout } from "../Checkout/useCheckout";
-import { getCashierById } from "./cashier.service";
+import { getCashierById, postCashier } from "./cashier.service";
 import type { CashierFormData } from "../../components/CashierFormCard";
 
 export function CashierProvider({ children }: { children: ReactNode }) {
@@ -29,7 +29,7 @@ export function CashierProvider({ children }: { children: ReactNode }) {
   ): Promise<Cashier | undefined> => {
     setLoading(true);
     try {
-      const newCashier = await addCashier(cashier);
+      const newCashier = await postCashier(cashier);
       return newCashier;
     } catch {
       toast.error(t("cashier.errorAddCashier"));

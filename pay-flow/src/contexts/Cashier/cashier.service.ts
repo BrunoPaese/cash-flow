@@ -7,9 +7,9 @@ export const getCashierById = async (id: number): Promise<Cashier> => {
   return response.data;
 };
 
-export const addCashier = async (
+export const postCashier = async (
   cashier: CashierFormData,
 ): Promise<Cashier> => {
-  const response = await api.post<Cashier>("/cashier/new", cashier);
+  const response = await api.post<Cashier>("/cashier/add", cashier);
   return response.data;
 };

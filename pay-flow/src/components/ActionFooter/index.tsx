@@ -36,9 +36,7 @@ export function ActionFooter({
           icon={CheckCircle}
           type="submit"
           disabled={disabled}
-          onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
-            event.stopPropagation();
-          }}
+          onClick={(e) => e.stopPropagation()}
         >
           {confirmText}
         </Button>

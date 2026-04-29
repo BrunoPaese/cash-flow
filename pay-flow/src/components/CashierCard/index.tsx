@@ -7,13 +7,14 @@ import { useNavigate } from "react-router-dom";
 import { Hash, Star, User } from "lucide-react";
 import { calculateAverageRating } from "../../utils/rating";
 import { formatEmpty } from "../../utils/formatEmpty";
-import type { Cashier } from "../../contexts/Cashier/CashierProvider";
+import type { Cashier } from "../../contexts/Cashier/CashierContext";
 import { useCheckout } from "../../contexts/Checkout/useCheckout";
+import type { MouseEvent } from "react";
 
 interface CashierCardProps {
   previewCashier?: Cashier;
   title?: string;
-  onAdd?: () => void;
+  onAdd?: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
 function CashierCard({ previewCashier, title, onAdd }: CashierCardProps) {
@@ -24,11 +25,16 @@ function CashierCard({ previewCashier, title, onAdd }: CashierCardProps) {
 
   const activeCashier = previewCashier ?? checkout?.cashier;
 
+  const handleOnAdd = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    onAdd?.(e);
+  };
+
   return (
     <Card
       title={title}
       onClick={() => navigate("/checkout/cashier")}
-      onAdd={onAdd}
+      onAdd={handleOnAdd}
     >
       <RowItem theme={theme}>
         <Hash size={16} />
