@@ -50,8 +50,11 @@ function CashierFormCard() {
   });
 
   const handleAddCashier = async (cashier: CashierFormData) => {
-    console.log("Adding cashier:", cashier);
-    addCashier(cashier);
+    const normalizedCashier: CashierFormData = {
+      ...cashier,
+      name: cashier.name?.toUpperCase(),
+    };
+    addCashier(normalizedCashier);
     reset();
   };
 
@@ -96,6 +99,7 @@ function CashierFormCard() {
             <Input
               text={t("cashier.enterCashier")}
               placeholder={t("cashier.email")}
+              uppercase={false}
               error={errors.email?.message}
               {...register("email")}
             />

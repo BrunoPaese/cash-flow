@@ -3,6 +3,8 @@ import { CustomerContext } from "./CustomerContext";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { useCheckout } from "../Checkout/useCheckout";
+import type { CustomerFormData } from "../../components/CustomerFormCard";
+import { postCustomer } from "./customer.service";
 
 export interface Customer {
   identifier: string;
@@ -23,19 +25,24 @@ export function CustomerProvider({ children }: { children: ReactNode }) {
     identifier: string,
   ): Promise<Customer | undefined> => {
     try {
-      // carrega o cliente pelo identificador
-      // mock
-      const customer = {
-        identifier,
-        name: "Bruno Paese",
-        phone: "54999999999",
-        email: "bruno@gmail.com",
-        country: "BR",
-        adress: "Faria Lima, 999, Pinheiros, São Paulo",
-      };
+      const customer = await getCustomer(identifier);
       return customer;
     } catch {
       toast.error(t("customer.errorGetCustomer"));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const addCustomer = async (
+    customer: CustomerFormData,
+  ): Promise<Customer | undefined> => {
+    setLoading(true);
+    try {
+      const newCustomer = await postCustomer(customer);
+      return newCustomer;
+    } catch {
+      toast.error(t("customer.errorAddCustomer"));
     } finally {
       setLoading(false);
     }
@@ -54,6 +61,7 @@ export function CustomerProvider({ children }: { children: ReactNode }) {
       value={{
         loading,
         getCustomer,
+        addCustomer,
         confirmCustomer,
       }}
     >

@@ -5,6 +5,7 @@ interface InputStyleProps {
   theme: "light" | "dark";
   center?: boolean;
   hasError?: boolean;
+  uppercase?: boolean;
 }
 
 export const Container = styled.div`
@@ -60,7 +61,7 @@ export const StyledInput = styled.input<InputStyleProps>`
       theme === "dark" ? colors.darkText : colors.lightText};
   }
 
-  text-transform: uppercase;
+  text-transform: ${({ uppercase }) => (uppercase ? "uppercase" : "none")};
 
   &::placeholder {
     text-transform: none;
