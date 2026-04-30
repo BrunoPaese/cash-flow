@@ -28,7 +28,7 @@ function Checkout() {
         <Row>
           <Col lg={9}>
             <Row>
-              <ProductCard onAdd={() => navigate("/checkout/product")} />
+              <ProductCard onAdd={() => navigate("/checkout/product/new")} />
             </Row>
             <Row>
               <ProductListCard />
@@ -38,31 +38,31 @@ function Checkout() {
             <Row>
               <CashierCard
                 title={t("cashier.cashier")}
-                onAdd={() => navigate("/checkout/cashier")}
+                onAdd={() => navigate("/checkout/cashier/new")}
               />
             </Row>
             <Row>
               <CustomerCard
                 title={t("customer.customer")}
-                onAdd={() => navigate("/checkout/customer")}
+                onAdd={() => navigate("/checkout/customer/new")}
               />
             </Row>
             <Row>
               <ShippingCard
                 title={t("shipping.shipping")}
-                onAdd={() => navigate("/checkout/shipping")}
+                onAdd={() => navigate("/checkout/shipping/new")}
               />
             </Row>
             <Row>
               <DiscountCard
                 title={t("discount.discount")}
-                onAdd={() => navigate("/checkout/discount")}
+                onAdd={() => navigate("/checkout/discount/new")}
               />
             </Row>
             <Row>
               <PaymentCard
                 title={t("payment.payment")}
-                onAdd={() => navigate("/checkout/payment")}
+                onAdd={() => navigate("/checkout/payment/new")}
               />
             </Row>
           </Col>

@@ -5,6 +5,7 @@ interface InputStyleProps {
   theme: "light" | "dark";
   center?: boolean;
   hasError?: boolean;
+  uppercase?: boolean;
 }
 
 export const Container = styled.div`
@@ -60,7 +61,7 @@ export const StyledInput = styled.input<InputStyleProps>`
       theme === "dark" ? colors.darkText : colors.lightText};
   }
 
-  text-transform: uppercase;
+  text-transform: ${({ uppercase }) => (uppercase ? "uppercase" : "none")};
 
   &::placeholder {
     text-transform: none;
@@ -78,6 +79,24 @@ export const StyledInput = styled.input<InputStyleProps>`
       theme === "dark"
         ? "0 0 0 4px rgba(255,255,255,0.06)"
         : "0 0 0 4px rgba(0,0,0,0.05)"};
+  }
+
+  &:disabled {
+    background: ${({ theme }) =>
+      theme === "dark" ? "rgba(255, 255, 255, 0.05)" : "rgba(0, 0, 0, 0.03)"};
+
+    color: ${({ theme }) =>
+      theme === "dark" ? "rgba(255, 255, 255, 0.4)" : "rgba(0, 0, 0, 0.4)"};
+
+    border: 1px solid
+      ${({ theme }) =>
+        theme === "dark" ? "rgba(255, 255, 255, 0.08)" : "rgba(0, 0, 0, 0.08)"};
+
+    cursor: not-allowed;
+    opacity: 0.8;
+
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
   }
 `;
 

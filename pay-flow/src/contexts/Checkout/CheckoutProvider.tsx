@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from "react";
-import type { Cashier } from "../Cashier/CashierProvider";
+import type { Cashier } from "../Cashier/CashierContext";
 import type { Customer } from "../Customer/CustomerProvider";
 import type { Shipping } from "../Shipping/ShippingProvider";
 import type { Discount } from "../Discount/DiscountProvider";

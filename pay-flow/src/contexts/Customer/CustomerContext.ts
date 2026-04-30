@@ -1,9 +1,11 @@
 import { createContext } from "react";
 import type { Customer } from "./CustomerProvider";
+import type { CustomerFormData } from "../../components/CustomerFormCard";
 
 export interface CustomerContextData {
   loading: boolean;
   getCustomer: (identifier: string) => Promise<Customer | undefined>;
+  addCustomer: (customer: CustomerFormData) => Promise<Customer | undefined>;
   confirmCustomer: (custumer?: Customer) => void;
 }
 

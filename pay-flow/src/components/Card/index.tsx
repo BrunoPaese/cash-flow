@@ -7,7 +7,7 @@ interface CardProps {
   title?: string;
   titlePadding?: number;
   onClick?: () => void;
-  onAdd?: () => void;
+  onAdd?: (e: MouseEvent<HTMLButtonElement>) => void;
   children: ReactNode;
 }
 
