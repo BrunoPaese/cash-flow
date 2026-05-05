@@ -77,8 +77,8 @@ function CustomerFormCard() {
         <Row>
           <Col>
             <Input
+              label={t("customer.identifier")}
               text={t("customer.enterCustomer")}
-              placeholder={t("customer.identifier")}
               error={errors.identifier?.message}
               autoFocus
               maxLength={CNPJ_CODE_LENGTH}
@@ -91,8 +91,8 @@ function CustomerFormCard() {
         <Row>
           <Col>
             <Input
+              label={t("customer.name")}
               text={t("customer.enterCustomer")}
-              placeholder={t("customer.name")}
               error={errors.name?.message}
               {...register("name")}
             />
@@ -101,8 +101,8 @@ function CustomerFormCard() {
         <Row>
           <Col>
             <Input
+              label={t("customer.phone")}
               text={t("customer.enterCustomer")}
-              placeholder={t("customer.phone")}
               error={errors.phone?.message}
               {...register("phone")}
             />
@@ -111,8 +111,8 @@ function CustomerFormCard() {
         <Row>
           <Col>
             <Input
+              label={t("customer.email")}
               text={t("customer.enterCustomer")}
-              placeholder={t("customer.email")}
               error={errors.email?.message}
               uppercase={false}
               {...register("email")}
@@ -122,8 +122,8 @@ function CustomerFormCard() {
         <Row>
           <Col>
             <Input
+              label={t("address.street")}
               text={t("address.enterCustomer")}
-              placeholder={t("address.street")}
               error={errors.address?.street?.message}
               {...register("address.street")}
             />
@@ -132,8 +132,8 @@ function CustomerFormCard() {
         <Row>
           <Col>
             <Input
+              label={t("address.number")}
               text={t("address.enterCustomer")}
-              placeholder={t("address.number")}
               error={errors.address?.number?.message}
               {...register("address.number")}
             />
@@ -142,8 +142,8 @@ function CustomerFormCard() {
         <Row>
           <Col>
             <Input
+              label={t("address.city")}
               text={t("address.enterCustomer")}
-              placeholder={t("address.city")}
               error={errors.address?.city?.message}
               {...register("address.city")}
             />
@@ -152,8 +152,8 @@ function CustomerFormCard() {
         <Row>
           <Col>
             <Input
+              label={t("address.postalCode")}
               text={t("address.enterCustomer")}
-              placeholder={t("address.postalCode")}
               error={errors.address?.postalCode?.message}
               {...register("address.postalCode")}
             />
@@ -162,8 +162,8 @@ function CustomerFormCard() {
         <Row>
           <Col>
             <Input
+              label={t("address.state")}
               text={t("address.enterCustomer")}
-              placeholder={t("address.state")}
               error={errors.address?.state?.message}
               {...register("address.state")}
             />
@@ -172,8 +172,8 @@ function CustomerFormCard() {
         <Row>
           <Col>
             <Input
+              label={t("address.uf")}
               text={t("address.enterCustomer")}
-              placeholder={t("address.uf")}
               error={errors.address?.uf?.message}
               {...register("address.uf")}
             />
@@ -182,8 +182,8 @@ function CustomerFormCard() {
         <Row>
           <Col>
             <Input
+              label={t("address.country")}
               text={t("address.enterCustomer")}
-              placeholder={t("address.country")}
               error={errors.address?.country?.message}
               {...register("address.country")}
             />

@@ -30,6 +30,11 @@ function Card({ title, titlePadding, children, onClick, onAdd }: CardProps) {
     onClick?.();
   };
 
+  const handleAdd = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    onAdd?.(e);
+  };
+
   return (
     <CardContainer theme={theme} onClick={handleClick} clickable={!!onClick}>
       {title && (
@@ -38,7 +43,7 @@ function Card({ title, titlePadding, children, onClick, onAdd }: CardProps) {
         </CardTitle>
       )}
       {onAdd && (
-        <AddButton type="button" onClick={onAdd} theme={theme}>
+        <AddButton type="button" onClick={handleAdd} theme={theme}>
           <Plus size={16} />
         </AddButton>
       )}

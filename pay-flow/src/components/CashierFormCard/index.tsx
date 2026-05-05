@@ -73,8 +73,8 @@ function CashierFormCard() {
         <Row>
           <Col>
             <Input
+              label={t("cashier.cpf")}
               text={t("cashier.enterCashier")}
-              placeholder={t("cashier.cpf")}
               error={errors.cpf?.message}
               autoFocus
               maxLength={CPF_CODE_LENGTH}
@@ -87,8 +87,8 @@ function CashierFormCard() {
         <Row>
           <Col>
             <Input
+              label={t("cashier.name")}
               text={t("cashier.enterCashier")}
-              placeholder={t("cashier.name")}
               error={errors.name?.message}
               {...register("name")}
             />
@@ -97,8 +97,8 @@ function CashierFormCard() {
         <Row>
           <Col>
             <Input
+              label={t("cashier.email")}
               text={t("cashier.enterCashier")}
-              placeholder={t("cashier.email")}
               uppercase={false}
               error={errors.email?.message}
               {...register("email")}

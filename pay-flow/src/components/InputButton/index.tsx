@@ -3,9 +3,8 @@ import { ActionButton, InputWrapper } from "./style";
 import Input from "../Input";
 import { useTheme } from "../../contexts/Theme/useTheme";
 
-export interface InputButtonProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
-  placeholder: string;
+export interface InputButtonProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  label: string;
   text: string;
   error?: string;
   icon: LucideIcon;
@@ -13,7 +12,7 @@ export interface InputButtonProps
 }
 
 function InputButton({
-  placeholder,
+  label,
   text,
   error,
   icon: Icon,
@@ -24,7 +23,7 @@ function InputButton({
 
   return (
     <InputWrapper>
-      <Input placeholder={placeholder} text={text} error={error} {...rest} />
+      <Input label={label} text={text} error={error} {...rest} />
       <ActionButton type="button" onClick={onClick} theme={theme}>
         <Icon size={16} />
       </ActionButton>

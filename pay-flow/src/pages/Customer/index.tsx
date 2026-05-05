@@ -60,7 +60,6 @@ function Customer() {
       phone: previewCustomer?.phone,
       email: previewCustomer?.email,
       country: previewCustomer?.country,
-      lastPurchase: previewCustomer?.lastPurchase,
       adress: previewCustomer?.adress,
     });
     navigate("/checkout");
@@ -98,8 +97,8 @@ function Customer() {
             <Row>
               <Col>
                 <InputButton
+                  label={t("customer.identifier")}
                   text={t("customer.identifier")}
-                  placeholder={t("customer.identifier")}
                   error={errors.identifier?.message}
                   value={inputIdentifier}
                   maxLength={CNPJ_CODE_LENGTH}
