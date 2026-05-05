@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { useCheckout } from "../Checkout/useCheckout";
 import type { CustomerFormData } from "../../components/CustomerFormCard";
-import { postCustomer } from "./customer.service";
+import { getCustomerById, postCustomer } from "./customer.service";
 
 export interface Customer {
   identifier: string;
@@ -25,7 +25,7 @@ export function CustomerProvider({ children }: { children: ReactNode }) {
     identifier: string,
   ): Promise<Customer | undefined> => {
     try {
-      const customer = await getCustomer(identifier);
+      const customer = await getCustomerById(identifier);
       return customer;
     } catch {
       toast.error(t("customer.errorGetCustomer"));

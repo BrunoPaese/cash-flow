@@ -12,6 +12,7 @@ import Discount from "../pages/Discount";
 import NewCashier from "../pages/NewCashier";
 import NewCustomer from "../pages/NewCustomer";
 import NewProduct from "../pages/NewProduct";
+import NewShipping from "../pages/NewShipping";
 
 function AppRoutes() {
   return (
@@ -28,6 +29,7 @@ function AppRoutes() {
         <Route path="/checkout/customer" element={<Customer />} />
         <Route path="/checkout/customer/new" element={<NewCustomer />} />
         <Route path="/checkout/shipping" element={<Shipping />} />
+        <Route path="/checkout/shipping/new" element={<NewShipping />} />
         <Route path="/checkout/discount" element={<Discount />} />
         <Route path="/checkout/payment" element={<Payment />} />
       </Routes>
