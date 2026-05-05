@@ -3,6 +3,8 @@ import { ShippingContext } from "./ShippingContext";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { useCheckout } from "../Checkout/useCheckout";
+import type { ShippingFormData } from "../../components/ShippingFormCard";
+import { getShippingById, postShipping } from "./shipping.service";
 
 export interface Shipping {
   hasShipping: boolean;
@@ -17,22 +19,26 @@ export function ShippingProvider({ children }: { children: ReactNode }) {
 
   const [loading, setLoading] = useState<boolean>(false);
 
-  const getShipping = async (
-    identifier?: string,
-  ): Promise<Shipping | undefined> => {
+  const getShipping = async (id: string): Promise<Shipping | undefined> => {
     try {
-      // carrega o frete pelo identificador do cliente
-      console.log(identifier);
-      // mock
-      const shipping = {
-        hasShipping: true,
-        type: "Sedex",
-        deliveryTime: "7 dias Úteis",
-        freight: 39.9,
-      };
+      const shipping = await getShippingById(id);
       return shipping;
     } catch {
       toast.error(t("shipping.errorGetShipping"));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const addShipping = async (
+    shipping: ShippingFormData,
+  ): Promise<Shipping | undefined> => {
+    setLoading(true);
+    try {
+      const newShipping = await postShipping(shipping);
+      return newShipping;
+    } catch {
+      toast.error(t("shipping.errorAddShipping"));
     } finally {
       setLoading(false);
     }
@@ -51,6 +57,7 @@ export function ShippingProvider({ children }: { children: ReactNode }) {
       value={{
         loading,
         getShipping,
+        addShipping,
         confirmShipping,
       }}
     >

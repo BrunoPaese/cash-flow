@@ -1,9 +1,11 @@
 import { createContext } from "react";
 import type { Shipping } from "./ShippingProvider";
+import type { ShippingFormData } from "../../components/ShippingFormCard";
 
 export interface ShippingContextData {
   loading: boolean;
-  getShipping: (identifier?: string) => Promise<Shipping | undefined>;
+  getShipping: (id: string) => Promise<Shipping | undefined>;
+  addShipping: (shipping: ShippingFormData) => Promise<Shipping | undefined>;
   confirmShipping: (shipping: Shipping) => void;
 }
 
