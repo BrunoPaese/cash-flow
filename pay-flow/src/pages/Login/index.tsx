@@ -59,14 +59,14 @@ function Login() {
             alt={t("login.logo")}
           />
           <Input
-            placeholder={t("login.email")}
+            label={t("login.email")}
             text={t("login.enterEmail")}
             autoFocus
             error={errors.email?.message}
             {...register("email")}
           />
           <Input
-            placeholder={t("login.password")}
+            label={t("login.password")}
             type="password"
             text={t("login.enterPassword")}
             error={errors.password?.message}

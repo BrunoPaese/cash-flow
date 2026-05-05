@@ -8,16 +8,18 @@ interface InputStyleProps {
   uppercase?: boolean;
 }
 
-export const Container = styled.div`
+export const Container = styled.div<InputStyleProps>`
   width: 100%;
   display: flex;
+  align-items: flex-start;
   flex-direction: column;
   gap: 6px;
   position: relative;
 
   label {
     font-size: 13px;
-    color: ${colors.darkText};
+    color: ${({ theme }) =>
+      theme === "dark" ? colors.darkText : colors.lightText};
   }
 `;
 

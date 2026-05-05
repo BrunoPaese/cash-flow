@@ -105,8 +105,8 @@ function ProductCard({ onAdd }: ProductCardProps) {
             <Row>
               <Col lg={3} align="center" justify="center">
                 <Input
+                  label={t("product.product")}
                   text={t("product.enterProduct")}
-                  placeholder={t("product.product")}
                   error={errors.item?.message}
                   autoFocus
                   maxLength={PRODUCT_CODE_LENGTH}
@@ -115,8 +115,8 @@ function ProductCard({ onAdd }: ProductCardProps) {
               </Col>
               <Col lg={9}>
                 <Input
+                  label={t("product.description")}
                   text={t("product.description")}
-                  placeholder={t("product.description")}
                   {...register("description")}
                 />
               </Col>
@@ -124,8 +124,8 @@ function ProductCard({ onAdd }: ProductCardProps) {
             <Row>
               <Col lg={3}>
                 <Input
+                  label={t("product.quantity")}
                   text={t("product.quantity")}
-                  placeholder={t("product.quantity")}
                   type="number"
                   error={errors.quantity?.message}
                   {...register("quantity")}
@@ -133,15 +133,15 @@ function ProductCard({ onAdd }: ProductCardProps) {
               </Col>
               <Col lg={3}>
                 <Input
+                  label={t("product.unitPrice")}
                   text={t("product.unitPrice")}
-                  placeholder={t("product.unitPrice")}
                   {...register("unitPrice")}
                 />
               </Col>
               <Col lg={3}>
                 <Input
+                  label={t("product.price")}
                   text={t("product.price")}
-                  placeholder={t("product.price")}
                   {...register("price")}
                 />
               </Col>

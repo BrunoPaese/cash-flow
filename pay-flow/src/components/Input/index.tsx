@@ -5,6 +5,7 @@ import { Tooltip } from "react-tooltip";
 import { useTheme } from "../../contexts/Theme/useTheme";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+  label?: string;
   placeholder?: string;
   text: string;
   center?: boolean;
@@ -13,6 +14,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 function Input({
+  label,
   placeholder,
   text,
   center,
@@ -23,7 +25,8 @@ function Input({
   const { theme } = useTheme();
 
   return (
-    <Container>
+    <Container theme={theme}>
+      {label && <label htmlFor={label}>{label}</label>}
       <StyledInput
         theme={theme}
         hasError={!!error}

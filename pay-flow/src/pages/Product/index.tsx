@@ -39,7 +39,7 @@ function Product() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Body>
           <Input
-            placeholder={t("product.product")}
+            label={t("product.product")}
             text={t("product.enterProduct")}
             error={errors.product?.message}
             {...register("product")}

@@ -25,16 +25,11 @@ function CashierCard({ previewCashier, title, onAdd }: CashierCardProps) {
 
   const activeCashier = previewCashier ?? checkout?.cashier;
 
-  const handleOnAdd = (e: MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    onAdd?.(e);
-  };
-
   return (
     <Card
       title={title}
       onClick={() => navigate("/checkout/cashier")}
-      onAdd={handleOnAdd}
+      onAdd={onAdd}
     >
       <RowItem theme={theme}>
         <Hash size={16} />

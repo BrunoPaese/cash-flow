@@ -11,6 +11,7 @@ import Customer from "../pages/Customer";
 import Discount from "../pages/Discount";
 import NewCashier from "../pages/NewCashier";
 import NewCustomer from "../pages/NewCustomer";
+import NewProduct from "../pages/NewProduct";
 
 function AppRoutes() {
   return (
@@ -21,6 +22,7 @@ function AppRoutes() {
         <Route path="/create-account" element={<CreateAccount />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/checkout/product" element={<Product />} />
+        <Route path="/checkout/product/new" element={<NewProduct />} />
         <Route path="/checkout/cashier" element={<Cashier />} />
         <Route path="/checkout/cashier/new" element={<NewCashier />} />
         <Route path="/checkout/customer" element={<Customer />} />

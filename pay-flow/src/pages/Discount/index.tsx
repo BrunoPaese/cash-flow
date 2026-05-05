@@ -100,8 +100,8 @@ function Discount() {
             <Row>
               <Col>
                 <InputButton
+                  label={t("discount.coupon")}
                   text={t("discount.coupon")}
-                  placeholder={t("discount.coupon")}
                   error={errors.couponCode?.message}
                   value={couponCode}
                   icon={Search}

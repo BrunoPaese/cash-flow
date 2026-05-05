@@ -73,13 +73,13 @@ function CreateAccount() {
         {step === "email" && (
           <>
             <Input
-              placeholder={t("login.name")}
+              label={t("login.name")}
               error={errors.name?.message}
               text={t("login.name")}
               {...register("name")}
             />
             <Input
-              placeholder={t("login.email")}
+              label={t("login.email")}
               error={errors.email?.message}
               text={t("login.enterEmail")}
               {...register("email")}
@@ -103,14 +103,14 @@ function CreateAccount() {
             />
             <Input
               type="password"
+              label={t("login.password")}
               text={t("login.enterEmail")}
-              placeholder={t("login.password")}
               error={errors.password?.message}
               {...register("password")}
             />
             <Input
               type="password"
-              placeholder={t("resetPassword.confirmPassword")}
+              label={t("resetPassword.confirmPassword")}
               text={t("login.confirmPassword")}
               error={errors.confirmPassword?.message}
               {...register("confirmPassword")}
