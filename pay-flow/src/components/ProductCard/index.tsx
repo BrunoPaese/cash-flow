@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { useProductList } from "../../contexts/ProductList/useProductList";
 import { useCallback, useEffect, useState } from "react";
 import { PRODUCT_CODE_LENGTH } from "../../domain/constants";
+import { useProduct } from "../../contexts/Product/useCustomer";
 
 export interface ProductFormData {
   item: string;
@@ -31,6 +32,7 @@ export interface ProductCardProps {
 function ProductCard({ onAdd }: ProductCardProps) {
   const { t } = useTranslation();
   const { addProduct } = useProductList();
+  const { getProduct } = useProduct();
   const navigate = useNavigate();
 
   const [image, setImage] = useState<string>(noImage);
@@ -67,35 +69,27 @@ function ProductCard({ onAdd }: ProductCardProps) {
       price: 0,
       quantity: 1,
     });
+    setImage(noImage);
   }, [inputItem, reset]);
 
   useEffect(() => {
-    if (!isValidProductCode(inputItem)) {
-      clearProductData();
-      return;
-    }
     const loadProduct = async () => {
-      // consulta api
-      const product = {
-        description: "Faca",
-        unitPrice: 250,
-        price: 450,
-        image: "https://via.placeholder.com/150",
-      };
-      setValue("description", product.description);
-      setValue("unitPrice", product.unitPrice);
-      setValue("price", product.price);
-      setImage(product.image);
+      if (!isValidProductCode(inputItem)) {
+        clearProductData();
+        return;
+      }
+      const result = await getProduct(inputItem);
+      if (!result) {
+        clearProductData();
+        return;
+      }
+      setValue("description", result.description);
+      setValue("unitPrice", result.price);
+      setValue("price", result.price);
+      setImage(result.image || noImage);
     };
     loadProduct();
-  }, [clearProductData, inputItem, setValue]);
-
-  const handleSearchProduct = () => {
-    if (!isValidProductCode(inputItem)) {
-      clearProductData();
-      return;
-    }
-  };
+  }, [clearProductData, getProduct, inputItem, setValue]);
 
   return (
     <Card
@@ -118,7 +112,6 @@ function ProductCard({ onAdd }: ProductCardProps) {
                   maxLength={PRODUCT_CODE_LENGTH}
                   autoFocus
                   {...register("item")}
-                  onBlur={handleSearchProduct}
                 />
               </Col>
               <Col lg={9}>
