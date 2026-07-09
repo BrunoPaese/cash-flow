@@ -8,17 +8,18 @@ import { useForm } from "react-hook-form";
 import { ActionFooter } from "../ActionFooter";
 import { newProductSchema } from "../../validations/newProductSchema";
 import { useProduct } from "../../contexts/Product/useCustomer";
+import FileInput from "../FileInput";
+import { useState } from "react";
+import noImage from "../../assets/noImage.png";
+import { ImagePlus } from "lucide-react";
 
 export interface ProductFormData {
-  item: string;
-  description: string;
-  price: number;
-  costPrice: number;
-  stock: number;
-  minStock: number;
-  maxStock: number;
+  id: string;
   barCode: string;
-  isActive: boolean;
+  description: string;
+  image?: File;
+  price: number;
+  stockQuantity: number;
 }
 
 function ProductFormCard() {
@@ -29,42 +30,69 @@ function ProductFormCard() {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<ProductFormData>({
     resolver: yupResolver(newProductSchema(t)),
   });
 
+  const [imagePreview, setImagePreview] = useState<string>("");
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) {
+      setImagePreview(noImage);
+      return;
+    }
+    setImagePreview(URL.createObjectURL(file));
+    setValue("image", file);
+  };
+
   const handleAddProduct = async (product: ProductFormData) => {
     const normalizedProduct: ProductFormData = {
       ...product,
+      id: product.id?.toUpperCase(),
+      barCode: product.barCode?.toUpperCase(),
       description: product.description.toUpperCase(),
     };
     addProduct(normalizedProduct);
+    setImagePreview("");
     reset();
   };
 
   const handleClear = () => {
+    setImagePreview("");
     reset();
   };
 
   return (
-    <Card title={t("customer.newCustomer")}>
+    <Card title={t("product.newProduct")}>
       <form onSubmit={handleSubmit(handleAddProduct)}>
         <Row>
           <Col>
             <Input
               label={t("product.id")}
               text={t("product.enterCustomer")}
-              error={errors.item?.message}
+              error={errors.id?.message}
               autoFocus
-              {...register("item")}
+              {...register("id")}
             />
           </Col>
         </Row>
         <Row>
           <Col>
             <Input
-              label={t("product.name")}
+              label={t("product.barCode")}
+              text={t("customer.enterCustomer")}
+              error={errors.barCode?.message}
+              {...register("barCode")}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Input
+              label={t("product.description")}
               text={t("customer.enterCustomer")}
               error={errors.description?.message}
               {...register("description")}
@@ -84,50 +112,21 @@ function ProductFormCard() {
         <Row>
           <Col>
             <Input
-              label={t("product.constPrice")}
+              label={t("product.stockQuantity")}
               text={t("customer.enterCustomer")}
-              error={errors.costPrice?.message}
-              {...register("costPrice")}
+              error={errors.stockQuantity?.message}
+              {...register("stockQuantity")}
             />
           </Col>
         </Row>
         <Row>
           <Col>
-            <Input
-              label={t("product.stock")}
-              text={t("customer.enterCustomer")}
-              error={errors.stock?.message}
-              {...register("stock")}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Input
-              label={t("product.minStock")}
-              text={t("customer.enterCustomer")}
-              error={errors.minStock?.message}
-              {...register("minStock")}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Input
-              label={t("product.maxStock")}
-              text={t("customer.enterCustomer")}
-              error={errors.maxStock?.message}
-              {...register("maxStock")}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Input
-              label={t("product.barCode")}
-              text={t("customer.enterCustomer")}
-              error={errors.barCode?.message}
-              {...register("barCode")}
+            <FileInput
+              label={t("product.image")}
+              text={t("product.uploadImage")}
+              preview={imagePreview}
+              onChange={handleImageChange}
+              icon={ImagePlus}
             />
           </Col>
         </Row>

@@ -8,11 +8,11 @@ import Payment from "../pages/Payment";
 import Shipping from "../pages/Shipping";
 import Cashier from "../pages/Cashier";
 import Customer from "../pages/Customer";
-import Discount from "../pages/Discount";
 import NewCashier from "../pages/NewCashier";
 import NewCustomer from "../pages/NewCustomer";
 import NewProduct from "../pages/NewProduct";
 import NewShipping from "../pages/NewShipping";
+import Discount from "../pages/Discount";
 
 function AppRoutes() {
   return (

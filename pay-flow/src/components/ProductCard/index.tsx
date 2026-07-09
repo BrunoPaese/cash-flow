@@ -90,6 +90,13 @@ function ProductCard({ onAdd }: ProductCardProps) {
     loadProduct();
   }, [clearProductData, inputItem, setValue]);
 
+  const handleSearchProduct = () => {
+    if (!isValidProductCode(inputItem)) {
+      clearProductData();
+      return;
+    }
+  };
+
   return (
     <Card
       title={t("product.product")}
@@ -108,9 +115,10 @@ function ProductCard({ onAdd }: ProductCardProps) {
                   label={t("product.product")}
                   text={t("product.enterProduct")}
                   error={errors.item?.message}
-                  autoFocus
                   maxLength={PRODUCT_CODE_LENGTH}
+                  autoFocus
                   {...register("item")}
+                  onBlur={handleSearchProduct}
                 />
               </Col>
               <Col lg={9}>

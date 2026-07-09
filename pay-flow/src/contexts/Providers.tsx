@@ -10,6 +10,7 @@ import { ThemeProvider } from "./Theme/ThemeProvider";
 import { CashierProvider } from "./Cashier/CashierProvider";
 import { CustomerProvider } from "./Customer/CustomerProvider";
 import { AuthProvider } from "./Auth/AuthProvider";
+import { ProductProvider } from "./Product/ProductProvider";
 
 export function Providers({ children }: { children: ReactNode }) {
   return (
@@ -22,7 +23,9 @@ export function Providers({ children }: { children: ReactNode }) {
                 <CashierProvider>
                   <CustomerProvider>
                     <PaymentProvider>
-                      <ShippingProvider>{children}</ShippingProvider>
+                      <ShippingProvider>
+                        <ProductProvider>{children}</ProductProvider>
+                      </ShippingProvider>
                     </PaymentProvider>
                   </CustomerProvider>
                 </CashierProvider>

@@ -90,16 +90,22 @@
   },
   "product": {
     "addProduct": "Adicionar produto",
+    "newProduct": "Novo produto",
+    "id": "SKU",
+    "barCode": "Código de barras",
     "description": "Descrição",
+    "stockQuantity": "Estoque",
+    "image": "Imagem",
+    "uploadImage": "Carregar imagem",
     "enterProduct": "Informe o código do produto",
-    "minQuantity": "Quantidade mínima é {{count}}",
     "noImage": "Produto sem imagem",
-    "price": "Preço total",
+    "price": "Preço",
     "product": "Produto",
     "productRequired": "Produto é obrigatório",
     "quantity": "Quantidade",
     "quantityRequired": "Quantidade é obrigatória",
-    "unitPrice": "Preço unitário"
+    "addProductSuccess": "Produto adicionado com sucesso",
+    "errorAddProduct": "Erro ao adicionar o produto"
   },
   "productList": {
     "emptyList": "Lista vazia",

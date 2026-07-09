@@ -7,15 +7,12 @@ import { getProductByItem, postProduct } from "./product.service";
 import { ProductContext } from "./ProductContext";
 
 export interface Product {
-  item: string;
-  description: string;
-  price: number;
-  costPrice: number;
-  stock: number;
-  minStock: number;
-  maxStock: number;
+  id: string;
   barCode: string;
-  isActive: boolean;
+  description: string;
+  image?: string;
+  price: number;
+  stockQuantity: number;
 }
 
 export function ProductProvider({ children }: { children: ReactNode }) {
@@ -40,8 +37,9 @@ export function ProductProvider({ children }: { children: ReactNode }) {
   ): Promise<Product | undefined> => {
     setLoading(true);
     try {
-      const newCustomer = await postProduct(product);
-      return newCustomer;
+      const newProduct = await postProduct(product);
+      toast.success(t("product.addProductSuccess"));
+      return newProduct;
     } catch {
       toast.error(t("product.errorAddProduct"));
     } finally {

@@ -18,6 +18,7 @@ import { productListSchema } from "../../validations/productListSchema";
 export interface ProductListFormData {
   quantity: number;
 }
+
 function ProductListCard() {
   const { t } = useTranslation();
   const { currency, locale } = useCurrency();
