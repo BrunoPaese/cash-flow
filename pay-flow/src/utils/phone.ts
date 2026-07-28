@@ -2,19 +2,20 @@ import {
   parsePhoneNumberFromString,
   type CountryCode,
 } from "libphonenumber-js";
+
 export function formatPhoneInternational(
-  phone?: string | null,
-  defaultCountry?: string,
-  fallback = "–"
+  phone?: string,
+  defaultCountry: CountryCode = "BR",
+  fallback = "",
 ) {
-  phone = phone?.trim();
   if (!phone) return fallback;
 
-  const country = defaultCountry as CountryCode | undefined;
+  const normalizedPhone = phone.replace(/\D/g, "");
 
-  const phoneNumber = parsePhoneNumberFromString(phone, {
-    defaultCountry: country,
-  });
+  const phoneNumber = parsePhoneNumberFromString(
+    normalizedPhone,
+    defaultCountry,
+  );
 
-  return phoneNumber ? phoneNumber.format("NATIONAL") : phone;
+  return phoneNumber?.formatNational() ?? phone;
 }

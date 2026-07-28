@@ -12,6 +12,10 @@ import FileInput from "../FileInput";
 import { useState } from "react";
 import noImage from "../../assets/noImage.png";
 import { ImagePlus } from "lucide-react";
+import {
+  PRODUCT_BARCODE_LENGTH,
+  PRODUCT_CODE_LENGTH,
+} from "../../domain/constants";
 
 export interface ProductFormData {
   id: string;
@@ -38,8 +42,8 @@ function ProductFormCard() {
 
   const [imagePreview, setImagePreview] = useState<string>("");
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
     if (!file) {
       setImagePreview(noImage);
       return;
@@ -74,6 +78,7 @@ function ProductFormCard() {
               label={t("product.id")}
               text={t("product.enterCustomer")}
               error={errors.id?.message}
+              maxLength={PRODUCT_CODE_LENGTH}
               autoFocus
               {...register("id")}
             />
@@ -85,6 +90,7 @@ function ProductFormCard() {
               label={t("product.barCode")}
               text={t("customer.enterCustomer")}
               error={errors.barCode?.message}
+              maxLength={PRODUCT_BARCODE_LENGTH}
               {...register("barCode")}
             />
           </Col>

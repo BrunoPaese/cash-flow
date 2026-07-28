@@ -33,6 +33,8 @@
   },
   "customer": {
     "confirmCustomer": "Confirmar cliente",
+    "newCustomer": "Novo cliente",
+    "addCustomer": "Adicionar cliente",
     "customer": "Cliente",
     "email": "E-mail",
     "errorGetCustomer": "Erro ao buscar as informações do cliente",
@@ -41,7 +43,18 @@
     "identifierRequired": "Identificador é obrigatório",
     "name": "Nome",
     "phone": "Telefone",
-    "submitCustomer": "Cliente salvo com sucesso"
+    "successAddCustomer": "Cliente salvo com sucesso"
+  },
+  "address": {
+    "street": "Rua",
+    "city": "Cidade",
+    "complement": "Complemento",
+    "neighborhood": "Bairro",
+    "number": "Número",
+    "state": "Estado",
+    "postalCode": "CEP",
+    "uf": "UF",
+    "country": "País"
   },
   "discount": {
     "coupon": "Cupom",
@@ -100,6 +113,7 @@
     "enterProduct": "Informe o código do produto",
     "noImage": "Produto sem imagem",
     "price": "Preço",
+    "unitPrice": "Preço unitário",
     "product": "Produto",
     "productRequired": "Produto é obrigatório",
     "quantity": "Quantidade",

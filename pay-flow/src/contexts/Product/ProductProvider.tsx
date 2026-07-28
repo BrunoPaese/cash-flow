@@ -10,7 +10,7 @@ export interface Product {
   id: string;
   barCode: string;
   description: string;
-  image?: string;
+  imageUrl?: string;
   price: number;
   stockQuantity: number;
 }

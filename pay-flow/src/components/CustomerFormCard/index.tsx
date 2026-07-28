@@ -10,6 +10,7 @@ import { ActionFooter } from "../ActionFooter";
 import { maskCpfCnpj } from "../../utils/mask";
 import { newCustomerSchema } from "../../validations/newCustomerSchema";
 import { useCustomer } from "../../contexts/Customer/useCustomer";
+import { formatPhoneInternational } from "../../utils/phone";
 
 export interface Address {
   street: string;
@@ -66,9 +67,15 @@ function CustomerFormCard() {
     reset();
   };
 
-  const handleChangeCustomer = (value: string) => {
+  const handleChangeIdentifier = (value: string) => {
     const masked = maskCpfCnpj(value);
     setValue("identifier", masked);
+  };
+
+  const handleChangePhone = (value: string) => {
+    const masked = formatPhoneInternational(value, "BR");
+    console.log("Masked phone:", masked);
+    setValue("phone", masked);
   };
 
   return (
@@ -83,7 +90,7 @@ function CustomerFormCard() {
               autoFocus
               maxLength={CNPJ_CODE_LENGTH}
               {...register("identifier", {
-                onChange: (event) => handleChangeCustomer(event.target.value),
+                onChange: (event) => handleChangeIdentifier(event.target.value),
               })}
             />
           </Col>
@@ -104,7 +111,9 @@ function CustomerFormCard() {
               label={t("customer.phone")}
               text={t("customer.enterCustomer")}
               error={errors.phone?.message}
-              {...register("phone")}
+              {...register("phone", {
+                onChange: (event) => handleChangePhone(event.target.value),
+              })}
             />
           </Col>
         </Row>

@@ -1,5 +1,7 @@
-export function maskCpfCnpj(value: string): string {
-  const digits = value.replace(/\D/g, "");
+export function maskCpfCnpj(identifier?: string, fallback = ""): string {
+  if (!identifier) return fallback;
+
+  const digits = identifier?.replace(/\D/g, "") || "";
 
   if (digits.length <= 11) {
     return digits

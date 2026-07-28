@@ -16,9 +16,7 @@ export const postProduct = async (product: ProductFormData) => {
   formData.append("price", String(product.price));
   formData.append("stockQuantity", String(product.stockQuantity));
 
-  if (product.image) {
-    formData.append("image", product.image);
-  }
+  if (product.image) formData.append("image", product.image);
 
   const response = await api.post("product/add", formData, {
     headers: {
@@ -28,4 +26,3 @@ export const postProduct = async (product: ProductFormData) => {
 
   return response.data;
 };
-  

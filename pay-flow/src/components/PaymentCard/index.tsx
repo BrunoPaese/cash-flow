@@ -11,7 +11,6 @@ import {
 } from "lucide-react";
 import { useTheme } from "../../contexts/Theme/useTheme";
 import Card from "../Card";
-import { useNavigate } from "react-router-dom";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { useCurrency } from "../../contexts/Currency/useCurrency";
 import { PaymentMethod } from "../../domain/enum";
@@ -20,22 +19,18 @@ import { useCheckout } from "../../contexts/Checkout/useCheckout";
 
 interface PaymentCardProps {
   title?: string;
+  onSearch?: () => void;
   onAdd: () => void;
 }
 
-function PaymentCard({ title, onAdd }: PaymentCardProps) {
+function PaymentCard({ title, onSearch, onAdd }: PaymentCardProps) {
   const { t } = useTranslation();
   const { theme } = useTheme();
   const { currency, locale } = useCurrency();
   const { checkout } = useCheckout();
-  const navigate = useNavigate();
 
   return (
-    <Card
-      title={title}
-      onClick={() => navigate("/checkout/payment")}
-      onAdd={onAdd}
-    >
+    <Card title={title} onSearch={onSearch} onAdd={onAdd}>
       <RowItem theme={theme}>
         <CreditCard size={16} />
         <Label>{t("payment.paymentMethod")}</Label>

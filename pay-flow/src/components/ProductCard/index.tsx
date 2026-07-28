@@ -15,6 +15,9 @@ import { useProductList } from "../../contexts/ProductList/useProductList";
 import { useCallback, useEffect, useState } from "react";
 import { PRODUCT_CODE_LENGTH } from "../../domain/constants";
 import { useProduct } from "../../contexts/Product/useCustomer";
+import { calculateItemSubTotal } from "../../utils/saleCalculations";
+import { useCurrency } from "../../contexts/Currency/useCurrency";
+import { formatCurrency } from "../../utils/formatCurrency";
 
 export interface ProductFormData {
   item: string;
@@ -33,6 +36,7 @@ function ProductCard({ onAdd }: ProductCardProps) {
   const { t } = useTranslation();
   const { addProduct } = useProductList();
   const { getProduct } = useProduct();
+  const { currency, locale } = useCurrency();
   const navigate = useNavigate();
 
   const [image, setImage] = useState<string>(noImage);
@@ -43,19 +47,40 @@ function ProductCard({ onAdd }: ProductCardProps) {
     reset,
     control,
     setValue,
+    setFocus,
     formState: { errors },
   } = useForm<ProductFormData>({
     resolver: yupResolver(productSchema(t)),
   });
 
   const handleAddProduct = (product: ProductFormData) => {
+    setFocus("item");
     addProduct(product);
-    reset();
+    reset({
+      item: "",
+      description: "",
+      quantity: 1,
+    });
   };
 
   const inputItem = useWatch({
     control,
     name: "item",
+  });
+
+  const inputQuantity = useWatch({
+    control,
+    name: "quantity",
+  });
+
+  const inputUnitPrice = useWatch({
+    control,
+    name: "unitPrice",
+  });
+
+  const inputPrice = useWatch({
+    control,
+    name: "price",
   });
 
   const isValidProductCode = (value: string) =>
@@ -65,8 +90,6 @@ function ProductCard({ onAdd }: ProductCardProps) {
     reset({
       item: inputItem,
       description: "",
-      unitPrice: 0,
-      price: 0,
       quantity: 1,
     });
     setImage(noImage);
@@ -80,21 +103,28 @@ function ProductCard({ onAdd }: ProductCardProps) {
       }
       const result = await getProduct(inputItem);
       if (!result) {
-        clearProductData();
         return;
       }
       setValue("description", result.description);
       setValue("unitPrice", result.price);
-      setValue("price", result.price);
-      setImage(result.image || noImage);
+      setValue("price", calculateItemSubTotal(inputQuantity, result.price));
+      setImage(result.imageUrl || noImage);
     };
     loadProduct();
-  }, [clearProductData, getProduct, inputItem, setValue]);
+  }, [
+    clearProductData,
+    getProduct,
+    inputItem,
+    inputQuantity,
+    setValue,
+    locale,
+    currency,
+  ]);
 
   return (
     <Card
       title={t("product.product")}
-      onClick={() => navigate("/checkout/product")}
+      onSearch={() => navigate("/checkout/product")}
       onAdd={onAdd}
     >
       <form onSubmit={handleSubmit(handleAddProduct)}>
@@ -118,6 +148,7 @@ function ProductCard({ onAdd }: ProductCardProps) {
                 <Input
                   label={t("product.description")}
                   text={t("product.description")}
+                  disabled
                   {...register("description")}
                 />
               </Col>
@@ -136,6 +167,8 @@ function ProductCard({ onAdd }: ProductCardProps) {
                 <Input
                   label={t("product.unitPrice")}
                   text={t("product.unitPrice")}
+                  value={formatCurrency(inputUnitPrice, locale, currency)}
+                  disabled
                   {...register("unitPrice")}
                 />
               </Col>
@@ -143,6 +176,8 @@ function ProductCard({ onAdd }: ProductCardProps) {
                 <Input
                   label={t("product.price")}
                   text={t("product.price")}
+                  value={formatCurrency(inputPrice, locale, currency)}
+                  disabled
                   {...register("price")}
                 />
               </Col>

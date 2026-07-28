@@ -5,7 +5,6 @@ import { useCurrency } from "../../contexts/Currency/useCurrency";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { useTheme } from "../../contexts/Theme/useTheme";
 import Card from "../Card";
-import { useNavigate } from "react-router-dom";
 import { formatEmpty, formatValueEmpty } from "../../utils/formatEmpty";
 import type { Discount } from "../../contexts/Discount/DiscountProvider";
 import { useCheckout } from "../../contexts/Checkout/useCheckout";
@@ -14,16 +13,21 @@ import { useDiscount } from "../../contexts/Discount/useDiscount";
 interface DiscountCardProps {
   previewDiscount?: Discount;
   title?: string;
+  onSearch?: () => void;
   onAdd?: () => void;
 }
 
-function DiscountCard({ previewDiscount, title, onAdd }: DiscountCardProps) {
+function DiscountCard({
+  previewDiscount,
+  title,
+  onSearch,
+  onAdd,
+}: DiscountCardProps) {
   const { t } = useTranslation();
   const { currency, locale } = useCurrency();
   const { theme } = useTheme();
   const { checkout } = useCheckout();
   const { discountValue, totalWithDiscount } = useDiscount();
-  const navigate = useNavigate();
 
   const activeDiscount = previewDiscount ?? checkout?.discount;
   const hasDiscount = (activeDiscount?.discountPercentage ?? 0) > 0;
@@ -35,11 +39,7 @@ function DiscountCard({ previewDiscount, title, onAdd }: DiscountCardProps) {
       : checkout?.payment?.netTotal;
 
   return (
-    <Card
-      title={title}
-      onClick={() => navigate("/checkout/discount")}
-      onAdd={onAdd}
-    >
+    <Card title={title} onSearch={onSearch} onAdd={onAdd}>
       <RowItem theme={theme}>
         <Tag size={16} />
         <Label>{t("discount.coupon")}</Label>

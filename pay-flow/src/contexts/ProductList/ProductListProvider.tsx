@@ -1,6 +1,7 @@
 import { useState, type ReactNode } from "react";
 import type { ProductFormData } from "../../components/ProductCard";
 import { ProductListContext } from "./ProductListContext";
+import { calculateItemSubTotal } from "../../utils/saleCalculations";
 
 export interface ProductList {
   item: string;
@@ -37,16 +38,16 @@ export function ProductListProvider({ children }: { children: ReactNode }) {
     setProductList((prev) => prev.filter((item) => item.item !== product.item));
   };
 
-  const updateProductQuantity = (product: string, quantity: number) => {
+  const updateProductQuantity = (item: string, quantity: number) => {
     setProductList((prev) =>
-      prev.map((p) =>
-        p.item === product
+      prev.map((product) =>
+        product.item === item
           ? {
-              ...p,
-              price: p.unitPrice * p.quantity,
+              ...product,
+              price: calculateItemSubTotal(quantity, product.unitPrice ?? 0),
               quantity,
             }
-          : p,
+          : product,
       ),
     );
   };
