@@ -1,6 +1,7 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { PrivateRoute } from "./PrivateRoute";
 import Login from "../pages/Login";
-import ResetPassword from "../pages/Shipping";
+// import ResetPassword from "../pages/ResetPassword";
 import CreateAccount from "../pages/CreateAccount";
 import Checkout from "../pages/Checkout";
 import Product from "../pages/Product";
@@ -18,20 +19,98 @@ function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/login" element={<Login />} />
+        {/* <Route path="/reset-password" element={<ResetPassword />} /> */}
         <Route path="/create-account" element={<CreateAccount />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/checkout/product" element={<Product />} />
-        <Route path="/checkout/product/new" element={<NewProduct />} />
-        <Route path="/checkout/cashier" element={<Cashier />} />
-        <Route path="/checkout/cashier/new" element={<NewCashier />} />
-        <Route path="/checkout/customer" element={<Customer />} />
-        <Route path="/checkout/customer/new" element={<NewCustomer />} />
-        <Route path="/checkout/shipping" element={<Shipping />} />
-        <Route path="/checkout/shipping/new" element={<NewShipping />} />
-        <Route path="/checkout/discount" element={<Discount />} />
-        <Route path="/checkout/payment" element={<Payment />} />
+        <Route
+          path="/checkout"
+          element={
+            <PrivateRoute>
+              <Checkout />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/checkout/product"
+          element={
+            <PrivateRoute>
+              <Product />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/checkout/product/new"
+          element={
+            <PrivateRoute>
+              <NewProduct />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/checkout/cashier"
+          element={
+            <PrivateRoute>
+              <Cashier />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/checkout/cashier/new"
+          element={
+            <PrivateRoute>
+              <NewCashier />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/checkout/customer"
+          element={
+            <PrivateRoute>
+              <Customer />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/checkout/customer/new"
+          element={
+            <PrivateRoute>
+              <NewCustomer />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/checkout/shipping"
+          element={
+            <PrivateRoute>
+              <Shipping />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/checkout/shipping/new"
+          element={
+            <PrivateRoute>
+              <NewShipping />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/checkout/discount"
+          element={
+            <PrivateRoute>
+              <Discount />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/checkout/payment"
+          element={
+            <PrivateRoute>
+              <Payment />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

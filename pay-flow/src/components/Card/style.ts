@@ -81,12 +81,17 @@ export const CardContent = styled.div`
 export const AddButton = styled.button`
   width: 32px;
   height: 32px;
+  min-width: 32px;
+  padding: 0;
+  margin: 0;
   border-radius: 50%;
   border: none;
+  box-sizing: border-box;
 
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 
   cursor: pointer;
 

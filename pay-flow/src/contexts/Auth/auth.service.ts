@@ -1,15 +1,12 @@
 import { api } from "../../api/api";
 import type { AuthResponse, User } from "./auth.config";
 
-export const loginRequest = async (
-  email: string,
-  password: string,
-): Promise<AuthResponse> => {
-  const res = await api.post("/auth/login", { email, password });
+export const loginRequest = async (payload: User): Promise<AuthResponse> => {
+  const res = await api.post("/auth/login", payload);
   return res.data;
 };
 
-export const getMeRequest = async (): Promise<User> => {
+export const getCurrentUser = async (): Promise<User> => {
   const res = await api.get("/auth/me");
   return res.data;
 };

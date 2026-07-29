@@ -1,13 +1,16 @@
 import Select from "../../components/Select";
 import type { Options } from "../../components/Select/type";
 import Toggle from "../../components/Toggle";
-import { Moon, Sun } from "lucide-react";
+import { Moon, Sun, LogOut } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "../../contexts/Theme/useTheme";
+import { useAuth } from "../../contexts/Auth/useAuth";
+import { useNavigate } from "react-router-dom";
 import { Header, Left, Right } from "./style";
 import i18n from "../../i18n";
 import { useState } from "react";
 import Breadcrumb from "../Breadcrumb";
+import { AddButton } from "../Card/style";
 
 export type Language = "pt" | "en" | "es";
 
@@ -18,6 +21,8 @@ interface HeaderControlsProps {
 function HeaderControls({ breadcrumbs }: HeaderControlsProps) {
   const { t } = useTranslation();
   const { theme, toggleTheme } = useTheme();
+  const { logout } = useAuth();
+  const navigate = useNavigate();
 
   function getInitialLanguage(): Language {
     const stored = localStorage.getItem("language");
@@ -58,6 +63,11 @@ function HeaderControls({ breadcrumbs }: HeaderControlsProps) {
     ];
   };
 
+  const handleLogout = async () => {
+    await logout();
+    navigate("/login", { replace: true });
+  };
+
   return (
     <Header>
       <Left>
@@ -76,6 +86,9 @@ function HeaderControls({ breadcrumbs }: HeaderControlsProps) {
           text={t("theme.selectTheme")}
           onChange={toggleTheme}
         />
+        <AddButton type="button" onClick={handleLogout} theme={theme}>
+          <LogOut size={14} />
+        </AddButton>
       </Right>
     </Header>
   );

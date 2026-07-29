@@ -1,12 +1,18 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../contexts/Auth/useAuth";
+import type { JSX } from "react";
+import Spinner from "../components/Spinner";
 
-export const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
-  const { isAuthenticated, loading } = useAuth();
+interface PrivateRouteProps {
+  children: JSX.Element;
+}
 
-  if (loading) return <p>Carregando...</p>;
+export function PrivateRoute({ children }: PrivateRouteProps) {
+  const { user, loading } = useAuth();
 
-  if (!isAuthenticated) return <Navigate to="/login" />;
+  if (loading) return <Spinner />;
+
+  if (!user) return <Navigate to="/login" replace />;
 
   return children;
-};
+}
