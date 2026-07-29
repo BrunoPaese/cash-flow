@@ -8,6 +8,7 @@ interface CardStyleProps {
 }
 
 export const CardContainer = styled.div<CardStyleProps>`
+  position: relative;
   width: 100%;
   cursor: ${({ clickable }) => (clickable ? "pointer" : "default")};
 
@@ -77,33 +78,48 @@ export const CardContent = styled.div`
   gap: 12px;
 `;
 
-export const AddButton = styled.button<CardStyleProps>`
-  position: absolute;
-  top: 12px;
-  right: 12px;
+export const AddButton = styled.button`
   width: 32px;
   height: 32px;
+  min-width: 32px;
+  padding: 0;
+  margin: 0;
   border-radius: 50%;
   border: none;
-  font-size: 18px;
-  font-weight: bold;
+  box-sizing: border-box;
+
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+
   cursor: pointer;
+
   background: ${({ theme }) =>
     theme === "dark" ? colors.darkBorder : colors.lightBorder};
 
   color: ${({ theme }) =>
     theme === "dark" ? colors.darkText : colors.lightText};
+
   transition:
     transform 0.2s ease,
     opacity 0.2s ease;
+
   &:hover {
     transform: scale(1.1);
     opacity: 0.9;
   }
+
   &:active {
     transform: scale(0.95);
   }
+`;
+
+export const CardActions = styled.div`
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  display: flex;
+  gap: 8px;
 `;

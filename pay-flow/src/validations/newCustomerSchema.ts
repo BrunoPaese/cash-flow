@@ -8,7 +8,7 @@ export const newCustomerSchema = (t: TFunction) =>
     phone: yup
       .string()
       .required(t("customer.phoneRequired"))
-      .matches(/^\d{10,11}$/, t("customer.phoneInvalid")),
+      .matches(/^\(\d{2}\)\s\d{5}-\d{4}$/, t("customer.phoneInvalid")),
     email: yup
       .string()
       .required(t("customer.emailRequired"))

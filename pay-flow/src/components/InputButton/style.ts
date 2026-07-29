@@ -16,7 +16,7 @@ export const StyledInput = styled.input`
 export const ActionButton = styled.button<StyleThemeProps>`
   position: absolute;
   right: 10px;
-  top: 50%;
+  top: calc(50% + 12px);
   transform: translateY(-50%);
   background: none;
   border: none;

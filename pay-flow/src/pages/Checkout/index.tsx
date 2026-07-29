@@ -38,30 +38,35 @@ function Checkout() {
             <Row>
               <CashierCard
                 title={t("cashier.cashier")}
+                onSearch={() => navigate("/checkout/cashier")}
                 onAdd={() => navigate("/checkout/cashier/new")}
               />
             </Row>
             <Row>
               <CustomerCard
                 title={t("customer.customer")}
+                onSearch={() => navigate("/checkout/customer")}
                 onAdd={() => navigate("/checkout/customer/new")}
               />
             </Row>
             <Row>
               <ShippingCard
                 title={t("shipping.shipping")}
+                onSearch={() => navigate("/checkout/shipping")}
                 onAdd={() => navigate("/checkout/shipping/new")}
               />
             </Row>
             <Row>
               <DiscountCard
                 title={t("discount.discount")}
+                onSearch={() => navigate("/checkout/discount")}
                 onAdd={() => navigate("/checkout/discount/new")}
               />
             </Row>
             <Row>
               <PaymentCard
                 title={t("payment.payment")}
+                onSearch={() => navigate("/checkout/payment")}
                 onAdd={() => navigate("/checkout/payment/new")}
               />
             </Row>

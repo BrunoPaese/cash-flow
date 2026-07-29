@@ -1,8 +1,6 @@
 import axios from "axios";
 
-const PUBLIC_PATHS = ["/login", "/create-account", "/reset-password"];
-
-export const api = axios.create({
+const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   withCredentials: true,
 });
@@ -10,12 +8,11 @@ export const api = axios.create({
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    const isPublicPath = PUBLIC_PATHS.includes(window.location.pathname);
-
-    if (error.response?.status === 401 && !isPublicPath) {
+    if (error.response?.status === 401) {
       window.location.href = "/login";
     }
-
     return Promise.reject(error);
   },
 );
+
+export default api;

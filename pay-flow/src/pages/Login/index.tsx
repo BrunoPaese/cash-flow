@@ -20,7 +20,8 @@ import { APP_VERSION } from "../../domain/constants";
 import HeaderControls from "../../components/HeaderControls";
 import { useTheme } from "../../contexts/Theme/useTheme";
 import { useNavigate } from "react-router-dom";
-// import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/Auth/useAuth";
+import { loginRequest } from "../../services/auth";
 
 interface LoginFormData {
   email: string;
@@ -30,6 +31,7 @@ interface LoginFormData {
 function Login() {
   const { t } = useTranslation();
   const { theme } = useTheme();
+  const { refreshUser, loading } = useAuth();
   const navigate = useNavigate();
 
   const {
@@ -40,11 +42,11 @@ function Login() {
     resolver: yupResolver(loginSchema(t)),
   });
 
-  const onSubmit = (data: LoginFormData) => {
-    // chamada login backend
-    console.log(data);
-    toast.success("Sucesso");
-    navigate("/checkout");
+  const onSubmit = async (data: LoginFormData) => {
+    await loginRequest(data);
+    await refreshUser();
+    toast.success(t("login.success"));
+    navigate("/checkout", { replace: true });
   };
 
   return (
@@ -61,6 +63,7 @@ function Login() {
           <Input
             label={t("login.email")}
             text={t("login.enterEmail")}
+            uppercase={false}
             autoFocus
             error={errors.email?.message}
             {...register("email")}
@@ -69,6 +72,7 @@ function Login() {
             label={t("login.password")}
             type="password"
             text={t("login.enterPassword")}
+            uppercase={false}
             error={errors.password?.message}
             {...register("password")}
           />

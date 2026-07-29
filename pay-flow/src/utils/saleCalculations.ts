@@ -1,6 +1,11 @@
 import type { ProductFormData } from "../components/ProductCard";
 import { INTEREST_RATE } from "../domain/constants";
 
+export function calculateItemSubTotal(quantity: number, price: number): number {
+  if (quantity <= 0 || price <= 0) return 0;
+  return quantity * price;
+}
+
 export function calculateSubTotal(products: ProductFormData[] = []): number {
   return products.reduce((total, item) => total + (item.price ?? 0), 0);
 }

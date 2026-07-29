@@ -1,14 +1,14 @@
 import { createContext } from "react";
 import type { User } from "./auth.config";
 
-export interface AuthContextType {
+interface AuthContextData {
   user: User | null;
   loading: boolean;
-  isAuthenticated: boolean;
-  login: (email: string, password: string) => Promise<void>;
+  setUser: (user: User | null) => void;
   logout: () => Promise<void>;
+  refreshUser: () => Promise<User | null>;
 }
 
-export const AuthContext = createContext<AuthContextType>(
-  {} as AuthContextType,
+export const AuthContext = createContext<AuthContextData>(
+  {} as AuthContextData,
 );

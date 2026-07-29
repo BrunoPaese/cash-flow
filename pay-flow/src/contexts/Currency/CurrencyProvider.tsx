@@ -1,12 +1,15 @@
+import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { CurrencyContext } from "./CurrencyContext";
 import { currencyByLocale } from "./currency.config";
 
 export function CurrencyProvider({ children }: { children: React.ReactNode }) {
-  const systemLocale = new Intl.NumberFormat().resolvedOptions().locale;
+  const { i18n } = useTranslation();
+
+  const locale = i18n.language;
 
   const defaultCurrency =
-    currencyByLocale[systemLocale as keyof typeof currencyByLocale] ?? "USD";
+    currencyByLocale[locale as keyof typeof currencyByLocale] ?? "USD";
 
   const [currency, setCurrency] = useState(defaultCurrency);
 
@@ -14,7 +17,7 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
     <CurrencyContext.Provider
       value={{
         currency,
-        locale: systemLocale,
+        locale,
         setCurrency,
       }}
     >

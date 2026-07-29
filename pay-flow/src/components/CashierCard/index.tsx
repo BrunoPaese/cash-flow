@@ -3,7 +3,6 @@ import { Label, RowItem, Value } from "./style";
 import { RatingStars } from "../RatingStars";
 import { useTheme } from "../../contexts/Theme/useTheme";
 import Card from "../Card";
-import { useNavigate } from "react-router-dom";
 import { Hash, Star, User } from "lucide-react";
 import { calculateAverageRating } from "../../utils/rating";
 import { formatEmpty } from "../../utils/formatEmpty";
@@ -14,23 +13,24 @@ import type { MouseEvent } from "react";
 interface CashierCardProps {
   previewCashier?: Cashier;
   title?: string;
+  onSearch?: (e: MouseEvent<HTMLButtonElement>) => void;
   onAdd?: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
-function CashierCard({ previewCashier, title, onAdd }: CashierCardProps) {
+function CashierCard({
+  previewCashier,
+  title,
+  onSearch,
+  onAdd,
+}: CashierCardProps) {
   const { t } = useTranslation();
   const { theme } = useTheme();
   const { checkout } = useCheckout();
-  const navigate = useNavigate();
 
   const activeCashier = previewCashier ?? checkout?.cashier;
 
   return (
-    <Card
-      title={title}
-      onClick={() => navigate("/checkout/cashier")}
-      onAdd={onAdd}
-    >
+    <Card title={title} onSearch={onSearch} onAdd={onAdd}>
       <RowItem theme={theme}>
         <Hash size={16} />
         <Label>{t("cashier.id")}</Label>

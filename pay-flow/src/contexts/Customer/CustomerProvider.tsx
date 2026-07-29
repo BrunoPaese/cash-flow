@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { useCheckout } from "../Checkout/useCheckout";
 import type { CustomerFormData } from "../../components/CustomerFormCard";
-import { getCustomerById, postCustomer } from "./customer.service";
+import { getCustomerByIdentifier, postCustomer } from "./customer.service";
 
 export interface Customer {
   identifier: string;
@@ -12,7 +12,7 @@ export interface Customer {
   phone?: string;
   email?: string;
   country?: string;
-  adress?: string;
+  address?: string;
 }
 
 export function CustomerProvider({ children }: { children: ReactNode }) {
@@ -25,7 +25,7 @@ export function CustomerProvider({ children }: { children: ReactNode }) {
     identifier: string,
   ): Promise<Customer | undefined> => {
     try {
-      const customer = await getCustomerById(identifier);
+      const customer = await getCustomerByIdentifier(identifier);
       return customer;
     } catch {
       toast.error(t("customer.errorGetCustomer"));
@@ -40,6 +40,7 @@ export function CustomerProvider({ children }: { children: ReactNode }) {
     setLoading(true);
     try {
       const newCustomer = await postCustomer(customer);
+      toast.success(t("customer.successAddCustomer"));
       return newCustomer;
     } catch {
       toast.error(t("customer.errorAddCustomer"));

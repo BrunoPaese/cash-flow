@@ -85,7 +85,7 @@ function Cashier() {
               <Col>
                 <InputButton
                   text={t("cashier.id")}
-                  placeholder={t("cashier.id")}
+                  label={t("cashier.id")}
                   error={errors.id?.message}
                   value={inputId}
                   maxLength={3}

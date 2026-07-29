@@ -18,6 +18,7 @@ import { productListSchema } from "../../validations/productListSchema";
 export interface ProductListFormData {
   quantity: number;
 }
+
 function ProductListCard() {
   const { t } = useTranslation();
   const { currency, locale } = useCurrency();
@@ -92,7 +93,9 @@ function ProductListCard() {
       label: t("product.price"),
       align: "center",
       width: "15%",
-      render: (value) => formatCurrency(Number(value), locale, currency),
+      render: (value) => {
+        return formatCurrency(Number(value), locale, currency);
+      },
     },
     {
       key: "actions",
