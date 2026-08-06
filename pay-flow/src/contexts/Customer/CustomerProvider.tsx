@@ -15,6 +15,7 @@ export interface Customer {
   phone?: string;
   email?: string;
   country?: string;
+  photoUrl?: string;
   addresses: Address[];
 }
 

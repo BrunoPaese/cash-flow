@@ -35,9 +35,10 @@ export interface Address {
 export interface CustomerFormData {
   identifier: string;
   name: string;
-  photo?: File;
   phone: string;
   email: string;
+  country?: string;
+  photo?: File | null;
   addresses: Address[];
 }
 
@@ -75,7 +76,7 @@ function CustomerFormCard() {
     },
   });
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove, replace } = useFieldArray({
     control,
     name: "addresses",
   });
@@ -85,12 +86,33 @@ function CustomerFormCard() {
     name: "identifier",
   });
 
-  const [imagePreview, setImagePreview] = useState("");
+  const [imagePreview, setImagePreview] = useState<string>("");
+  const [imageUrl, setImageUrl] = useState<string>("");
+  const [photo, setPhoto] = useState<File | null>(null);
+
+  const handleClear = () => {
+    reset({
+      identifier: "",
+      name: "",
+      phone: "",
+      email: "",
+    });
+
+    replace([emptyAddress]);
+
+    setPhoto(null);
+    setImagePreview("");
+    setImageUrl("");
+  };
 
   const handleAddCustomer = async (customer: CustomerFormData) => {
-    addCustomer(customer);
+    await addCustomer({
+      ...customer,
+      photo,
+    });
+
     // reset();
-    setImagePreview("");
+    handleClear();
   };
 
   const handleChangeIdentifier = (value: string) => {
@@ -105,18 +127,19 @@ function CustomerFormCard() {
     setValue(`addresses.${index}.postalCode`, maskPostalCode(value));
   };
 
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) {
-      return;
-    }
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+
+    if (!file) return;
+
+    setPhoto(file);
     setImagePreview(URL.createObjectURL(file));
-    setValue("photo", file);
   };
 
   const handleRemovePhoto = () => {
+    setPhoto(null);
     setImagePreview("");
-    setValue("photo", undefined);
+    setImageUrl("");
   };
 
   const handleGetAddress = async (index: number) => {
@@ -141,12 +164,22 @@ function CustomerFormCard() {
     if (!customer) return;
 
     reset({
-      identifier: customer.identifier,
-      name: customer.name,
-      phone: customer.phone,
-      email: customer.email,
-      addresses: customer.addresses,
+      identifier: maskCpfCnpj(customer.identifier),
+      name: customer.name ?? "",
+      phone: customer.phone ? maskPhone(customer.phone) : "",
+      email: customer.email ?? "",
     });
+
+    replace(
+      customer.addresses.map((address) => ({
+        ...address,
+        number: address.number?.toString() ?? "",
+        postalCode: maskPostalCode(address.postalCode),
+      })),
+    );
+
+    setImagePreview("");
+    setImageUrl(customer.photoUrl ?? "");
   };
 
   return (
@@ -160,7 +193,7 @@ function CustomerFormCard() {
                   <Col xs={3}>
                     <FileInput
                       text={t("customer.uploadPhoto")}
-                      preview={imagePreview}
+                      preview={imagePreview || imageUrl}
                       onChange={handleImageChange}
                       icon={ImagePlus}
                       label=""
@@ -336,7 +369,7 @@ function CustomerFormCard() {
             <Col>
               <ActionFooter
                 confirmText={t("customer.addCustomer")}
-                onClear={() => reset()}
+                onClear={handleClear}
               />
             </Col>
           </Row>

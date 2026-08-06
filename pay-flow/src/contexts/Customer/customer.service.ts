@@ -1,8 +1,17 @@
 import { api } from "../../api/api";
-import type { CustomerFormData } from "../../components/CustomerFormCard";
+import type { Address } from "../../components/CustomerFormCard";
 import type { ApiResponse } from "../../types/api-response";
 import { onlyNumbers } from "../../utils/onlyNumbers";
 import type { Customer } from "./CustomerProvider";
+
+export interface CustomerPayload {
+  identifier: string;
+  name: string;
+  photoUrl?: string;
+  phone: string;
+  email: string;
+  addresses: Address[];
+}
 
 export const getCustomerByIdentifier = async (
   identifier: string,
@@ -14,7 +23,7 @@ export const getCustomerByIdentifier = async (
 };
 
 export const postCustomer = async (
-  customer: CustomerFormData,
+  customer: CustomerPayload,
 ): Promise<Customer> => {
   const formData = new FormData();
 
@@ -42,7 +51,7 @@ export const postCustomer = async (
     formData.append(`addresses[${index}].uf`, address.uf.toUpperCase());
   });
 
-  if (customer.photo) formData.append("photo", customer.photo);
+  if (customer.photoUrl) formData.append("photo", customer.photoUrl);
 
   const response = await api.post<Customer>("/customer", formData, {
     headers: {
