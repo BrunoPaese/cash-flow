@@ -3,21 +3,31 @@ import { colors } from "../Style/theme";
 
 interface StyledButtonProps {
   color?: string;
+  variant?: "solid" | "outline" | "ghost";
+  fullWidth?: boolean;
 }
 
 export const StyledButton = styled.button<StyledButtonProps>`
-  width: 100%;
+  width: ${({ fullWidth }) => (fullWidth ? "100%" : "fit-content")};
   height: 48px;
-
   border-radius: 14px;
-  border: none;
+  padding: 10px 14px;
 
-  background: ${({ color }) => (color ? color : colors.primary)};
-  color: ${colors.white};
+  border: ${({ variant, color }) =>
+    variant === "outline" ? `1px solid ${color ?? colors.primary}` : "none"};
+
+  background: ${({ variant, color }) =>
+    variant === "solid" ? (color ?? colors.primary) : "transparent"};
+
+  color: ${({ variant, color }) =>
+    variant === "solid" ? colors.white : (color ?? colors.primary)};
 
   font-size: 15px;
   font-weight: 500;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont;
 
   display: flex;
   align-items: center;
@@ -28,12 +38,18 @@ export const StyledButton = styled.button<StyledButtonProps>`
   transition: all 0.25s ease;
 
   &:hover {
-    filter: brightness(0.96);
+    ${({ variant, color }) =>
+      variant === "ghost"
+        ? `
+          background: ${color ?? colors.primary}15;
+        `
+        : `
+          filter: brightness(0.96);
+        `}
   }
 
   &:active {
     transform: scale(0.98);
-    filter: brightness(0.92);
   }
 
   &:focus {

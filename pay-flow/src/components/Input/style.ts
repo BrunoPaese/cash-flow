@@ -61,12 +61,14 @@ export const StyledInput = styled.input<InputStyleProps>`
   &::placeholder {
     color: ${({ theme }) =>
       theme === "dark" ? colors.darkText : colors.lightText};
+    opacity: ${({ theme }) => (theme === "dark" ? 0.45 : 0.5)};
   }
 
   text-transform: ${({ uppercase }) => (uppercase ? "uppercase" : "none")};
 
   &::placeholder {
     text-transform: none;
+    opacity: ${({ theme }) => (theme === "dark" ? 0.45 : 0.5)};
   }
 
   &:focus {

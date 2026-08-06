@@ -3,12 +3,10 @@ import { Label, RowItem, Value } from "./style";
 import { CreditCard, Mail, Phone, User } from "lucide-react";
 import { useTheme } from "../../contexts/Theme/useTheme";
 import Card from "../Card";
-import { formatPhoneInternational } from "../../utils/phone";
 import { formatEmpty } from "../../utils/formatEmpty";
 import type { Customer } from "../../contexts/Customer/CustomerProvider";
 import { useCheckout } from "../../contexts/Checkout/useCheckout";
-import { maskCpfCnpj } from "../../utils/mask";
-import type { CountryCode } from "libphonenumber-js";
+import { maskCpfCnpj, maskPhone } from "../../utils/mask";
 
 interface CustomerCardProps {
   previewCustomer?: Customer;
@@ -44,13 +42,7 @@ function CustomerCard({
       <RowItem theme={theme}>
         <Phone size={16} />
         <Label>{t("customer.phone")}</Label>
-        <Value>
-          {formatPhoneInternational(
-            activeCustumer?.phone,
-            activeCustumer?.country as CountryCode,
-            "–",
-          )}
-        </Value>
+        <Value>{maskPhone(activeCustumer?.phone, "–")}</Value>
       </RowItem>
       <RowItem theme={theme}>
         <Mail size={16} />

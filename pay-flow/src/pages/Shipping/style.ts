@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { colors } from "../../components/Style/theme";
-import type { StyleThemeProps } from "../../type/type";
+import type { StyleThemeProps } from "../../types/type";
 
 export const GridButton = styled.div`
   display: flex;

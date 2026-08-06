@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { colors } from "../Style/theme";
 import { Link } from "react-router-dom";
-import type { StyleThemeProps } from "../../type/type";
+import type { StyleThemeProps } from "../../types/type";
 
 export const CrumbLink = styled(Link)`
   all: unset;

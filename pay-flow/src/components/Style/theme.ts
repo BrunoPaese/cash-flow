@@ -21,6 +21,7 @@ export const colors = {
   // White
   white: "#ffffff",
 
-  // Error
+  // Status colors
   red: "#ef4444",
+  green: "#22c55e",
 };

@@ -31,6 +31,17 @@ export const UploadArea = styled.label<InputStyleProps>`
   width: 100%;
   height: 220px;
 
+  background: ${({ theme }) =>
+    theme === "dark" ? colors.darkComponentBg : colors.lightComponentBg};
+
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  box-shadow: ${({ theme }) =>
+    theme === "dark"
+      ? "0 12px 32px rgba(0,0,0,0.45)"
+      : "0 12px 32px rgba(0,0,0,0.12)"};
+
   border: 1px solid
     ${({ hasError, theme }) =>
       hasError
@@ -39,7 +50,7 @@ export const UploadArea = styled.label<InputStyleProps>`
           ? colors.darkBorder
           : colors.lightBorder};
 
-  border-radius: 8px;
+  border-radius: 16px;
 
   display: flex;
   justify-content: center;

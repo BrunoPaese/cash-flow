@@ -38,14 +38,21 @@
     "customer": "Cliente",
     "email": "E-mail",
     "errorGetCustomer": "Erro ao buscar as informações do cliente",
-    "identifier": "Identificador",
+    "identifier": "CPF / CNPJ",
     "identifierInvalid": "Identificador inválido",
     "identifierRequired": "Identificador é obrigatório",
     "name": "Nome",
     "phone": "Telefone",
-    "successAddCustomer": "Cliente salvo com sucesso"
+    "successAddCustomer": "Cliente salvo com sucesso",
+    "uploadPhoto": "Carregar foto",
+    "placeholderName": "Nome completo",
+    "defaultIdentifier": "000.000.000-00",
+    "defaultPhone": "(00) 00000-0000",
+    "defaultEmail": "exemplo@dominio.com",
+    "personalInformation": "Informações pessoais"
   },
   "address": {
+    "address": "Endereço",
     "street": "Rua",
     "city": "Cidade",
     "complement": "Complemento",
@@ -54,7 +61,16 @@
     "state": "Estado",
     "postalCode": "CEP",
     "uf": "UF",
-    "country": "País"
+    "country": "País",
+    "addAddress": "Adicionar endereço",
+    "placeholderPostalCode": "00000-000",
+    "placeholderStreet": "Nome da rua",
+    "placeholderNumber": "123",
+    "placeholderComplement": "Apto, Bloco, Casa, etc.",
+    "placeholderNeighborhood": "Nome do bairro",
+    "placeholderCity": "Nome da cidade",
+    "placeholderState": "Nome do estado",
+    "placeholderUf": "UF"
   },
   "discount": {
     "coupon": "Cupom",

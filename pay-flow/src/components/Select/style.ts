@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { colors } from "../Style/theme";
-import type { StyleThemeProps } from "../../type/type";
+import type { StyleThemeProps } from "../../types/type";
 
 export const Container = styled.div`
   width: 100%;
@@ -22,7 +22,10 @@ export const StyledSelect = styled.select<StyleThemeProps>`
   border-radius: 14px;
 
   font-size: 15px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont;
 
   appearance: none;
   -webkit-appearance: none;
@@ -81,7 +84,10 @@ export const StyledLabel = styled.label<StyleThemeProps>`
   margin-bottom: 10px;
   font-size: 16px;
   font-weight: 600;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont;
 
   color: ${({ theme }) =>
     theme === "dark" ? colors.darkText : colors.lightText};
