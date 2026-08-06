@@ -1,15 +1,16 @@
 import { api } from "../../api/api";
 import type { CustomerFormData } from "../../components/CustomerFormCard";
+import type { ApiResponse } from "../../types/api-response";
 import { onlyNumbers } from "../../utils/onlyNumbers";
 import type { Customer } from "./CustomerProvider";
 
 export const getCustomerByIdentifier = async (
   identifier: string,
-): Promise<Customer> => {
-  const response = await api.get<Customer>(
+): Promise<Customer | null> => {
+  const response = await api.get<ApiResponse<Customer>>(
     `/customer/${onlyNumbers(identifier)}`,
   );
-  return response.data;
+  return response.data.data;
 };
 
 export const postCustomer = async (
@@ -22,7 +23,7 @@ export const postCustomer = async (
   formData.append("phone", onlyNumbers(customer.phone));
   formData.append("email", customer.email);
 
-  customer.address.forEach((address, index) => {
+  customer.addresses.forEach((address, index) => {
     formData.append(`addresses[${index}].street`, address.street.toUpperCase());
     formData.append(`addresses[${index}].number`, String(address.number));
     formData.append(

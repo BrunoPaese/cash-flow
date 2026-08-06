@@ -3,7 +3,10 @@ import { CustomerContext } from "./CustomerContext";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { useCheckout } from "../Checkout/useCheckout";
-import type { CustomerFormData } from "../../components/CustomerFormCard";
+import type {
+  Address,
+  CustomerFormData,
+} from "../../components/CustomerFormCard";
 import { getCustomerByIdentifier, postCustomer } from "./customer.service";
 
 export interface Customer {
@@ -12,7 +15,7 @@ export interface Customer {
   phone?: string;
   email?: string;
   country?: string;
-  address?: string;
+  addresses: Address[];
 }
 
 export function CustomerProvider({ children }: { children: ReactNode }) {
