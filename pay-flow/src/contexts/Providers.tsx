@@ -11,6 +11,7 @@ import { CashierProvider } from "./Cashier/CashierProvider";
 import { CustomerProvider } from "./Customer/CustomerProvider";
 import { AuthProvider } from "./Auth/AuthProvider";
 import { ProductProvider } from "./Product/ProductProvider";
+import { AddressProvider } from "./Address/AddressProvider";
 
 export function Providers({ children }: { children: ReactNode }) {
   return (
@@ -18,19 +19,21 @@ export function Providers({ children }: { children: ReactNode }) {
       <AuthProvider>
         <CurrencyProvider>
           <CheckoutProvider>
-            <DiscountProvider>
-              <ProductListProvider>
-                <CashierProvider>
-                  <CustomerProvider>
-                    <PaymentProvider>
-                      <ShippingProvider>
-                        <ProductProvider>{children}</ProductProvider>
-                      </ShippingProvider>
-                    </PaymentProvider>
-                  </CustomerProvider>
-                </CashierProvider>
-              </ProductListProvider>
-            </DiscountProvider>
+            <AddressProvider>
+              <DiscountProvider>
+                <ProductListProvider>
+                  <CashierProvider>
+                    <CustomerProvider>
+                      <PaymentProvider>
+                        <ShippingProvider>
+                          <ProductProvider>{children}</ProductProvider>
+                        </ShippingProvider>
+                      </PaymentProvider>
+                    </CustomerProvider>
+                  </CashierProvider>
+                </ProductListProvider>
+              </DiscountProvider>
+            </AddressProvider>
           </CheckoutProvider>
         </CurrencyProvider>
       </AuthProvider>

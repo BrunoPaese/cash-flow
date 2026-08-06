@@ -9,6 +9,7 @@ export const StyledRow = styled.div<StyledRowProps>`
   display: flex;
   width: 100%;
   flex-wrap: wrap;
+  box-sizing: border-box;
 
   margin-bottom: 16px;
 

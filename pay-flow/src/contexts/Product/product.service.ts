@@ -1,10 +1,13 @@
 import { api } from "../../api/api";
 import type { ProductFormData } from "../../components/ProductFormCard";
+import type { ApiResponse } from "../../types/api-response";
 import type { Product } from "./ProductProvider";
 
-export const getProductByItem = async (item: string): Promise<Product> => {
-  const response = await api.get<Product>(`/product/${item}`);
-  return response.data;
+export const getProductByItem = async (
+  item: string,
+): Promise<Product | null> => {
+  const response = await api.get<ApiResponse<Product>>(`/product/${item}`);
+  return response.data.data;
 };
 
 export const postProduct = async (product: ProductFormData) => {
@@ -18,7 +21,7 @@ export const postProduct = async (product: ProductFormData) => {
 
   if (product.image) formData.append("image", product.image);
 
-  const response = await api.post("product/add", formData, {
+  const response = await api.post("product", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },

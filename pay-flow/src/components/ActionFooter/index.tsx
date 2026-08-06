@@ -1,11 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { CheckCircle, Trash2, Undo } from "lucide-react";
+import { CheckCircle, Eraser, Undo } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import Button from "../Button";
 import { colors } from "../Style/theme";
-import { Row } from "../Row";
 import { Col } from "../Col";
-import { toast } from "react-toastify";
+import { ButtonGroup, FooterWrapper } from "./style";
 
 interface ActionFooterProps {
   confirmText: string;
@@ -24,40 +23,37 @@ export function ActionFooter({
   const handleClear = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     onClear();
-    navigate("/checkout");
-    toast.success("Sucesso");
   };
 
   return (
-    <Row>
+    <FooterWrapper>
       <Col xs={8}>
+        <ButtonGroup>
+          <Button
+            text={t("common.cancel")}
+            icon={Undo}
+            onClick={() => navigate("/checkout")}
+          />
+          <Button
+            text={t("common.remove")}
+            icon={Eraser}
+            color={colors.red}
+            onClick={handleClear}
+          />
+        </ButtonGroup>
+      </Col>
+      <Col xs={4}>
         <Button
           text={confirmText}
           icon={CheckCircle}
           type="submit"
           disabled={disabled}
+          fullWidth
           onClick={(e) => e.stopPropagation()}
         >
           {confirmText}
         </Button>
       </Col>
-      <Col xs={2}>
-        <Button
-          text={t("common.cancel")}
-          icon={Undo}
-          onClick={() => navigate("/checkout")}
-        />
-      </Col>
-      <Col xs={2}>
-        <Button
-          text={t("common.remove")}
-          icon={Trash2}
-          color={colors.red}
-          onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
-            handleClear(event);
-          }}
-        />
-      </Col>
-    </Row>
+    </FooterWrapper>
   );
 }

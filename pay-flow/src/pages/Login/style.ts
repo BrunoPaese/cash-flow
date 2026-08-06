@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { colors } from "../../components/Style/theme";
 import { Link } from "react-router-dom";
-import type { StyleThemeProps } from "../../type/type";
+import type { StyleThemeProps } from "../../types/type";
 
 export const Page = styled.div<StyleThemeProps>`
   min-height: 100vh;
@@ -13,7 +13,10 @@ export const Page = styled.div<StyleThemeProps>`
   background: ${({ theme }) =>
     theme === "dark" ? colors.darkBackground : colors.lightBackground};
 
-  font-family: system-ui, -apple-system, BlinkMacSystemFont;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont;
 `;
 
 export const StyledLink = styled(Link)<StyleThemeProps>`
@@ -34,13 +37,18 @@ export const RightContainer = styled.div<StyleThemeProps>`
 export const Body = styled.div`
   flex: 1;
 
+  width: 100%;
+  max-width: 1400px;
+
+  margin: 0 auto;
+
+  padding: 24px;
+
+  box-sizing: border-box;
+
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
 
-  width: 400px;
-  margin: 0 auto;
   gap: 10px;
 `;
 
