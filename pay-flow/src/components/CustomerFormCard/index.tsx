@@ -4,7 +4,7 @@ import { Row } from "../Row";
 import { Col } from "../Col";
 import Input from "../Input";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useFieldArray, useForm, useWatch } from "react-hook-form";
 import {
   CNPJ_CODE_LENGTH,
   PHONE_LENGTH,
@@ -21,6 +21,10 @@ import Button from "../Button";
 import InputButton from "../InputButton";
 import { useAddress } from "../../contexts/Address/useAddress";
 import { colors } from "../Style/theme";
+import { toast } from "react-toastify";
+import type { Customer } from "../../contexts/Customer/CustomerProvider";
+import { AxiosError } from "axios";
+import { useLoading } from "../../hooks/useLoading";
 
 export interface Address {
   street: string;
@@ -35,16 +39,18 @@ export interface Address {
 export interface CustomerFormData {
   identifier: string;
   name: string;
-  photo?: File;
   phone: string;
   email: string;
-  address: Address[];
+  country?: string;
+  photo?: File | null;
+  addresses: Address[];
 }
 
 function CustomerFormCard() {
   const { t } = useTranslation();
-  const { addCustomer } = useCustomer();
+  const { execute } = useLoading();
   const { getAddress } = useAddress();
+  const { addCustomer, getCustomer } = useCustomer();
 
   const emptyAddress: Address = {
     street: "",
@@ -71,21 +77,54 @@ function CustomerFormCard() {
       name: "",
       phone: "",
       email: "",
-      address: [emptyAddress],
+      addresses: [emptyAddress],
     },
   });
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove, replace } = useFieldArray({
     control,
-    name: "address",
+    name: "addresses",
   });
 
-  const [imagePreview, setImagePreview] = useState("");
+  const inputIdentifier = useWatch({
+    control,
+    name: "identifier",
+  });
+
+  const [imagePreview, setImagePreview] = useState<string>("");
+  const [imageUrl, setImageUrl] = useState<string>("");
+  const [photo, setPhoto] = useState<File | null>(null);
+
+  const handleClear = () => {
+    reset({
+      identifier: "",
+      name: "",
+      phone: "",
+      email: "",
+    });
+
+    replace([emptyAddress]);
+
+    setPhoto(null);
+    setImagePreview("");
+    setImageUrl("");
+  };
 
   const handleAddCustomer = async (customer: CustomerFormData) => {
-    addCustomer(customer);
+    try {
+      await execute(() =>
+        addCustomer({
+          ...customer,
+          photo,
+        }),
+      );
+      toast.success(t("customer.successAddCustomer"));
+    } catch {
+      toast.error(t("customer.errorAddCustomer"));
+    } finally {
+      handleClear();
+    }
     // reset();
-    setImagePreview("");
   };
 
   const handleChangeIdentifier = (value: string) => {
@@ -97,25 +136,26 @@ function CustomerFormCard() {
   };
 
   const handlePostalCode = (index: number, value: string) => {
-    setValue(`address.${index}.postalCode`, maskPostalCode(value));
+    setValue(`addresses.${index}.postalCode`, maskPostalCode(value));
   };
 
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) {
-      return;
-    }
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+
+    if (!file) return;
+
+    setPhoto(file);
     setImagePreview(URL.createObjectURL(file));
-    setValue("photo", file);
   };
 
   const handleRemovePhoto = () => {
+    setPhoto(null);
     setImagePreview("");
-    setValue("photo", undefined);
+    setImageUrl("");
   };
 
   const handleGetAddress = async (index: number) => {
-    const postalCode = getValues(`address.${index}.postalCode`);
+    const postalCode = getValues(`addresses.${index}.postalCode`);
 
     if (!postalCode) return;
 
@@ -123,11 +163,47 @@ function CustomerFormCard() {
 
     if (!address) return;
 
-    setValue(`address.${index}.street`, address.street);
-    setValue(`address.${index}.complement`, address.complement);
-    setValue(`address.${index}.neighborhood`, address.neighborhood);
-    setValue(`address.${index}.city`, address.city);
-    setValue(`address.${index}.uf`, address.uf);
+    setValue(`addresses.${index}.street`, address.street);
+    setValue(`addresses.${index}.complement`, address.complement);
+    setValue(`addresses.${index}.neighborhood`, address.neighborhood);
+    setValue(`addresses.${index}.city`, address.city);
+    setValue(`addresses.${index}.uf`, address.uf);
+  };
+
+  const handleGetCustomer = async () => {
+    let customer: Customer | undefined;
+
+    try {
+      customer = await execute(() => getCustomer(inputIdentifier));
+      toast.success(t("customer.successGetCustomer"));
+    } catch (error) {
+      if (error instanceof AxiosError && error.response?.status === 404) {
+        toast.warning(t("customer.notFound"));
+        return;
+      }
+      toast.error(t("customer.errorGetCustomer"));
+      return;
+    }
+
+    if (!customer) return;
+
+    reset({
+      identifier: maskCpfCnpj(customer.identifier),
+      name: customer.name ?? "",
+      phone: customer.phone ? maskPhone(customer.phone) : "",
+      email: customer.email ?? "",
+    });
+
+    replace(
+      customer.addresses.map((address) => ({
+        ...address,
+        number: address.number?.toString() ?? "",
+        postalCode: maskPostalCode(address.postalCode),
+      })),
+    );
+
+    setImagePreview("");
+    setImageUrl(customer.photoUrl ?? "");
   };
 
   return (
@@ -141,7 +217,7 @@ function CustomerFormCard() {
                   <Col xs={3}>
                     <FileInput
                       text={t("customer.uploadPhoto")}
-                      preview={imagePreview}
+                      preview={imagePreview || imageUrl}
                       onChange={handleImageChange}
                       icon={ImagePlus}
                       label=""
@@ -171,12 +247,14 @@ function CustomerFormCard() {
                     </Row>
                     <Row>
                       <Col xs={6}>
-                        <Input
+                        <InputButton
+                          icon={Search}
                           text=""
                           label={t("customer.identifier")}
                           placeholder={t("customer.defaultIdentifier")}
                           error={errors.identifier?.message}
                           maxLength={CNPJ_CODE_LENGTH}
+                          onClick={handleGetCustomer}
                           {...register("identifier")}
                           onChange={(e) =>
                             handleChangeIdentifier(e.target.value)
@@ -228,8 +306,8 @@ function CustomerFormCard() {
                         placeholder={t("address.placeholderPostalCode")}
                         label={t("address.postalCode")}
                         maxLength={POSTAL_CODE_LENGTH}
-                        error={errors.address?.[index]?.postalCode?.message}
-                        {...register(`address.${index}.postalCode`)}
+                        error={errors.addresses?.[index]?.postalCode?.message}
+                        {...register(`addresses.${index}.postalCode`)}
                         onChange={(e) =>
                           handlePostalCode(index, e.target.value)
                         }
@@ -240,8 +318,8 @@ function CustomerFormCard() {
                         text=""
                         placeholder={t("address.placeholderStreet")}
                         label={t("address.street")}
-                        error={errors.address?.[index]?.street?.message}
-                        {...register(`address.${index}.street`)}
+                        error={errors.addresses?.[index]?.street?.message}
+                        {...register(`addresses.${index}.street`)}
                       />
                     </Col>
                   </Row>
@@ -251,8 +329,8 @@ function CustomerFormCard() {
                         text=""
                         label={t("address.number")}
                         placeholder={t("address.placeholderNumber")}
-                        error={errors.address?.[index]?.number?.message}
-                        {...register(`address.${index}.number`)}
+                        error={errors.addresses?.[index]?.number?.message}
+                        {...register(`addresses.${index}.number`)}
                       />
                     </Col>
                     <Col xs={10}>
@@ -260,8 +338,8 @@ function CustomerFormCard() {
                         text=""
                         label={t("address.complement")}
                         placeholder={t("address.placeholderComplement")}
-                        error={errors.address?.[index]?.complement?.message}
-                        {...register(`address.${index}.complement`)}
+                        error={errors.addresses?.[index]?.complement?.message}
+                        {...register(`addresses.${index}.complement`)}
                       />
                     </Col>
                   </Row>
@@ -271,8 +349,8 @@ function CustomerFormCard() {
                         text=""
                         label={t("address.neighborhood")}
                         placeholder={t("address.placeholderNeighborhood")}
-                        error={errors.address?.[index]?.neighborhood?.message}
-                        {...register(`address.${index}.neighborhood`)}
+                        error={errors.addresses?.[index]?.neighborhood?.message}
+                        {...register(`addresses.${index}.neighborhood`)}
                       />
                     </Col>
                     <Col xs={7}>
@@ -280,8 +358,8 @@ function CustomerFormCard() {
                         text=""
                         label={t("address.city")}
                         placeholder={t("address.placeholderCity")}
-                        error={errors.address?.[index]?.city?.message}
-                        {...register(`address.${index}.city`)}
+                        error={errors.addresses?.[index]?.city?.message}
+                        {...register(`addresses.${index}.city`)}
                       />
                     </Col>
                     <Col xs={1}>
@@ -289,8 +367,8 @@ function CustomerFormCard() {
                         text=""
                         label={t("address.uf")}
                         placeholder={t("address.placeholderUf")}
-                        error={errors.address?.[index]?.uf?.message}
-                        {...register(`address.${index}.uf`)}
+                        error={errors.addresses?.[index]?.uf?.message}
+                        {...register(`addresses.${index}.uf`)}
                       />
                     </Col>
                   </Row>
@@ -315,7 +393,7 @@ function CustomerFormCard() {
             <Col>
               <ActionFooter
                 confirmText={t("customer.addCustomer")}
-                onClear={() => reset()}
+                onClear={handleClear}
               />
             </Col>
           </Row>

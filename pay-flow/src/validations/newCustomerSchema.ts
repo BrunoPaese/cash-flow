@@ -20,7 +20,7 @@ export const newCustomerSchema = (t: TFunction) =>
       .string()
       .required(t("customer.emailRequired"))
       .email(t("customer.emailInvalid")),
-    address: yup
+    addresses: yup
       .array()
       .of(
         yup.object({

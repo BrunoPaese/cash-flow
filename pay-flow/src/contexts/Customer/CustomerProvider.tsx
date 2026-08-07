@@ -1,9 +1,12 @@
-import { useState, type ReactNode } from "react";
+import { type ReactNode } from "react";
 import { CustomerContext } from "./CustomerContext";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { useCheckout } from "../Checkout/useCheckout";
-import type { CustomerFormData } from "../../components/CustomerFormCard";
+import type {
+  Address,
+  CustomerFormData,
+} from "../../components/CustomerFormCard";
 import { getCustomerByIdentifier, postCustomer } from "./customer.service";
 
 export interface Customer {
@@ -12,41 +15,26 @@ export interface Customer {
   phone?: string;
   email?: string;
   country?: string;
-  address?: string;
+  photoUrl?: string;
+  addresses: Address[];
 }
 
 export function CustomerProvider({ children }: { children: ReactNode }) {
   const { t } = useTranslation();
   const { setCheckout } = useCheckout();
 
-  const [loading, setLoading] = useState<boolean>(false);
-
   const getCustomer = async (
     identifier: string,
   ): Promise<Customer | undefined> => {
-    try {
-      const customer = await getCustomerByIdentifier(identifier);
-      return customer;
-    } catch {
-      toast.error(t("customer.errorGetCustomer"));
-    } finally {
-      setLoading(false);
-    }
+    const customer = await getCustomerByIdentifier(identifier);
+    return customer;
   };
 
   const addCustomer = async (
     customer: CustomerFormData,
   ): Promise<Customer | undefined> => {
-    setLoading(true);
-    try {
-      const newCustomer = await postCustomer(customer);
-      toast.success(t("customer.successAddCustomer"));
-      return newCustomer;
-    } catch {
-      toast.error(t("customer.errorAddCustomer"));
-    } finally {
-      setLoading(false);
-    }
+    const newCustomer = await postCustomer(customer);
+    return newCustomer;
   };
 
   const confirmCustomer = async (customer?: Customer) => {
@@ -60,7 +48,6 @@ export function CustomerProvider({ children }: { children: ReactNode }) {
   return (
     <CustomerContext.Provider
       value={{
-        loading,
         getCustomer,
         addCustomer,
         confirmCustomer,
