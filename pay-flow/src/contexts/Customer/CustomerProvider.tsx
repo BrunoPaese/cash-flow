@@ -28,14 +28,8 @@ export function CustomerProvider({ children }: { children: ReactNode }) {
   const getCustomer = async (
     identifier: string,
   ): Promise<Customer | undefined> => {
-    try {
-      const customer = await getCustomerByIdentifier(identifier);
-      return customer;
-    } catch {
-      toast.error(t("customer.errorGetCustomer"));
-    } finally {
-      setLoading(false);
-    }
+    const customer = await getCustomerByIdentifier(identifier);
+    return customer;
   };
 
   const addCustomer = async (

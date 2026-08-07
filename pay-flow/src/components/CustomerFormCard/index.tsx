@@ -21,6 +21,9 @@ import Button from "../Button";
 import InputButton from "../InputButton";
 import { useAddress } from "../../contexts/Address/useAddress";
 import { colors } from "../Style/theme";
+import { toast } from "react-toastify";
+import type { Customer } from "../../contexts/Customer/CustomerProvider";
+import { AxiosError } from "axios";
 
 export interface Address {
   street: string;
@@ -159,7 +162,21 @@ function CustomerFormCard() {
   };
 
   const handleGetCustomer = async () => {
-    const customer = await getCustomer(inputIdentifier);
+    let customer: Customer | undefined;
+
+    try {
+      customer = await getCustomer(inputIdentifier);
+    } catch (error) {
+      if (error instanceof AxiosError && error.response?.status === 404) {
+        toast.warning(t("customer.notFound"));
+        return;
+      }
+
+      toast.error(t("customer.errorGetCustomer"));
+      return;
+    }
+
+    toast.success(t("customer.successGetCustomer"));
 
     if (!customer) return;
 

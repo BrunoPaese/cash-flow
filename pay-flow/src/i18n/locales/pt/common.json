@@ -49,7 +49,10 @@
     "defaultIdentifier": "000.000.000-00",
     "defaultPhone": "(00) 00000-0000",
     "defaultEmail": "exemplo@dominio.com",
-    "personalInformation": "Informações pessoais"
+    "personalInformation": "Informações pessoais",
+    "notFound": "Cliente não encontrado",
+    "successGetCustomer": "Cliente encontrado com sucesso",
+    "errorAddCustomer": "Erro ao adicionar o cliente"
   },
   "address": {
     "address": "Endereço",
