@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react";
+import { type ReactNode } from "react";
 import { CustomerContext } from "./CustomerContext";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
@@ -23,8 +23,6 @@ export function CustomerProvider({ children }: { children: ReactNode }) {
   const { t } = useTranslation();
   const { setCheckout } = useCheckout();
 
-  const [loading, setLoading] = useState<boolean>(false);
-
   const getCustomer = async (
     identifier: string,
   ): Promise<Customer | undefined> => {
@@ -35,16 +33,8 @@ export function CustomerProvider({ children }: { children: ReactNode }) {
   const addCustomer = async (
     customer: CustomerFormData,
   ): Promise<Customer | undefined> => {
-    setLoading(true);
-    try {
-      const newCustomer = await postCustomer(customer);
-      toast.success(t("customer.successAddCustomer"));
-      return newCustomer;
-    } catch {
-      toast.error(t("customer.errorAddCustomer"));
-    } finally {
-      setLoading(false);
-    }
+    const newCustomer = await postCustomer(customer);
+    return newCustomer;
   };
 
   const confirmCustomer = async (customer?: Customer) => {
@@ -58,7 +48,6 @@ export function CustomerProvider({ children }: { children: ReactNode }) {
   return (
     <CustomerContext.Provider
       value={{
-        loading,
         getCustomer,
         addCustomer,
         confirmCustomer,

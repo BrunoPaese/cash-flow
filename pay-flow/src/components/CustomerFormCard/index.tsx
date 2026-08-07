@@ -24,6 +24,7 @@ import { colors } from "../Style/theme";
 import { toast } from "react-toastify";
 import type { Customer } from "../../contexts/Customer/CustomerProvider";
 import { AxiosError } from "axios";
+import { useLoading } from "../../hooks/useLoading";
 
 export interface Address {
   street: string;
@@ -47,8 +48,9 @@ export interface CustomerFormData {
 
 function CustomerFormCard() {
   const { t } = useTranslation();
-  const { addCustomer, getCustomer } = useCustomer();
+  const { execute } = useLoading();
   const { getAddress } = useAddress();
+  const { addCustomer, getCustomer } = useCustomer();
 
   const emptyAddress: Address = {
     street: "",
@@ -109,13 +111,20 @@ function CustomerFormCard() {
   };
 
   const handleAddCustomer = async (customer: CustomerFormData) => {
-    await addCustomer({
-      ...customer,
-      photo,
-    });
-
+    try {
+      await execute(() =>
+        addCustomer({
+          ...customer,
+          photo,
+        }),
+      );
+      toast.success(t("customer.successAddCustomer"));
+    } catch {
+      toast.error(t("customer.errorAddCustomer"));
+    } finally {
+      handleClear();
+    }
     // reset();
-    handleClear();
   };
 
   const handleChangeIdentifier = (value: string) => {
@@ -165,18 +174,16 @@ function CustomerFormCard() {
     let customer: Customer | undefined;
 
     try {
-      customer = await getCustomer(inputIdentifier);
+      customer = await execute(() => getCustomer(inputIdentifier));
+      toast.success(t("customer.successGetCustomer"));
     } catch (error) {
       if (error instanceof AxiosError && error.response?.status === 404) {
         toast.warning(t("customer.notFound"));
         return;
       }
-
       toast.error(t("customer.errorGetCustomer"));
       return;
     }
-
-    toast.success(t("customer.successGetCustomer"));
 
     if (!customer) return;
 
