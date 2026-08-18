@@ -1,5 +1,9 @@
 import { createContext } from "react";
-import type { User } from "./auth.config";
+import type {
+  RegisterAccountPayload,
+  User,
+  VerifyEmailPayload,
+} from "./auth.config";
 
 interface AuthContextData {
   user: User | null;
@@ -7,6 +11,8 @@ interface AuthContextData {
   setUser: (user: User | null) => void;
   logout: () => Promise<void>;
   refreshUser: () => Promise<User | null>;
+  registerAccount: (payload: RegisterAccountPayload) => Promise<void>;
+  verifyEmail: (payload: VerifyEmailPayload) => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextData>(

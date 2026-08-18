@@ -1,5 +1,10 @@
 import { api } from "../../api/api";
-import type { AuthResponse, User } from "./auth.config";
+import type {
+  AuthResponse,
+  RegisterAccountPayload,
+  User,
+  VerifyEmailPayload,
+} from "./auth.config";
 
 export const loginRequest = async (payload: User): Promise<AuthResponse> => {
   const res = await api.post("/auth/login", payload);
@@ -13,4 +18,14 @@ export const getCurrentUser = async (): Promise<User> => {
 
 export const logoutRequest = async () => {
   await api.post("/auth/logout");
+};
+
+export const registerAccountApi = async (payload: RegisterAccountPayload) => {
+  const res = await api.post("/user", payload);
+  return res.data;
+};
+
+export const verifyEmailRequest = async (payload: VerifyEmailPayload) => {
+  const res = await api.post("/auth/verify-email", payload);
+  return res.data;
 };
