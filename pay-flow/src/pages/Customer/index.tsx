@@ -60,7 +60,7 @@ function Customer() {
       phone: previewCustomer?.phone,
       email: previewCustomer?.email,
       country: previewCustomer?.country,
-      address: previewCustomer?.address,
+      addresses: previewCustomer?.addresses || [],
     });
     navigate("/checkout");
   };

@@ -1,11 +1,29 @@
 import { useState, useEffect, type ReactNode } from "react";
 import { AuthContext } from "./AuthContext";
-import { getCurrentUser, logoutRequest } from "./auth.service";
-import type { User } from "./auth.config";
+import {
+  getCurrentUser,
+  logoutRequest,
+  registerAccountApi,
+  verifyEmailRequest,
+} from "./auth.service";
+import type {
+  RegisterAccountPayload,
+  User,
+  VerifyEmailPayload,
+} from "./auth.config";
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const registerAccount = async (payload: RegisterAccountPayload) => {
+    await registerAccountApi(payload);
+  };
+
+  const verifyEmail = async (payload: VerifyEmailPayload) => {
+    await verifyEmailRequest(payload);
+    await refreshUser();
+  };
 
   const refreshUser = async (): Promise<User | null> => {
     setLoading(true);
@@ -41,7 +59,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, loading, setUser, logout, refreshUser }}
+      value={{
+        user,
+        loading,
+        setUser,
+        logout,
+        refreshUser,
+        registerAccount,
+        verifyEmail,
+      }}
     >
       {children}
     </AuthContext.Provider>

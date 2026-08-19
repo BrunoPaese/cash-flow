@@ -27,7 +27,7 @@
   },
   "createAccount": {
     "createAccount": "Criar conta",
-    "titleCreate": "Defina sua senha",
+    "titleCreate": "Nova conta",
     "titleEmail": "Crie sua conta",
     "verificationCode": "Código de verificação"
   },
@@ -102,7 +102,8 @@
     "passwordMin": "A senha deve ter pelo menos doze caracteres",
     "passwordNoSpaces": "A senha não pode conter espaços",
     "passwordRequired": "Senha é obrigatória",
-    "signIn": "Fazer login"
+    "signIn": "Fazer login",
+    "placeholderName": "Nome completo"
   },
   "payment": {
     "cash": "Dinheiro",

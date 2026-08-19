@@ -124,7 +124,7 @@ function CustomerFormCard() {
     } finally {
       handleClear();
     }
-    // reset();
+    reset();
   };
 
   const handleChangeIdentifier = (value: string) => {
