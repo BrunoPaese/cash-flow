@@ -20,12 +20,13 @@ export const logoutRequest = async () => {
   await api.post("/auth/logout");
 };
 
+//TODO: criar um context para user
 export const registerAccountApi = async (payload: RegisterAccountPayload) => {
   const res = await api.post("/user", payload);
   return res.data;
 };
 
 export const verifyEmailRequest = async (payload: VerifyEmailPayload) => {
-  const res = await api.post("/auth/verify-email", payload);
+  const res = await api.post("/user/verify-email", payload);
   return res.data;
 };
